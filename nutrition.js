@@ -128,6 +128,7 @@ $('#searchButton').on('click', function(){
 
 
           lunch.push({
+            id: Date.now(), //削除用の一意ID     
             inputText:inputText,
             elements:elements,
           });
@@ -161,6 +162,7 @@ $('#searchButton').on('click', function(){
           }
 
           dinner.push({
+            id: Date.now(),  //削除用の一意ID     
             inputText:inputText,
             elements:elements,
           });
@@ -194,6 +196,7 @@ $('#searchButton').on('click', function(){
           }
 
           other.push({
+            id: Date.now(),  //削除用の一意ID     
             inputText:inputText,
             elements:elements,
           });
@@ -236,11 +239,11 @@ function renderMorning(morning) {
   }
     $('#morningArea').html(html);
 
-    $('.mealItem').on('click', function () {
+    $('#morningArea, .mealItem').on('click', function () {
     currentFoodId = $(this).data('id');
     console.log('選択中ID:', currentFoodId);
 
-    $('.mealItem').removeClass('selected');
+    $('#morningArea .mealItem').removeClass('selected');
     $(this).addClass('selected');
   });
 }
@@ -314,11 +317,11 @@ function renderLunch(lunch) {
     `;        
   }
   $('#lunchArea').html(html);
-  $('.mealItem').on('click', function () {
+  $('#lunchArea .mealItem').on('click', function () {
     currentFoodId = $(this).data('id');
     console.log('選択中ID:', currentFoodId);
 
-    $('.mealItem').removeClass('selected');
+    $('#lunchArea .mealItem').removeClass('selected');
     $(this).addClass('selected');
   });
 }
@@ -358,7 +361,7 @@ $('#deleteLunchButton').on('click', function () {
   localStorage.setItem('meal_2', JSON.stringify(lunch));
 
   // 再描画
-  renderMorning(lunch);
+  renderLunch(lunch);
 
   // 選択解除
   currentFoodId = null;
@@ -382,11 +385,11 @@ function renderDinner(dinner) {
     `;        
   }
   $('#dinnerArea').html(html);
-  $('.mealItem').on('click', function () {
+  $('#dinnerArea .mealItem').on('click', function () {
     currentFoodId = $(this).data('id');
     console.log('選択中ID:', currentFoodId);
 
-    $('.mealItem').removeClass('selected');
+    $('#dinnerArea .mealItem').removeClass('selected');
     $(this).addClass('selected');
   });
 
@@ -451,11 +454,11 @@ $('#deleteDinnerButton').on('click', function () {
       `;        
     }
     $('#otherArea').html(html);
-    $('.mealItem').on('click', function () {
+    $('#otherArea .mealItem').on('click', function () {
       currentFoodId = $(this).data('id');
       console.log('選択中ID:', currentFoodId);
 
-      $('.mealItem').removeClass('selected');
+      $('#otherArea .mealItem').removeClass('selected');
       $(this).addClass('selected');
     });
   }
