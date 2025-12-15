@@ -27,10 +27,12 @@
             <div>
                 <input type="text" id="form">
                 <button id="searchButton">検索</button>
-                <button id="morningButton">朝食</button>
-                <button id="lunchButton">昼食</button>
-                <button id="dinnerButton">夕食</button>
-                <button id="otherButton">間食</button>
+                <div id="goButton"> 
+                    <button id="morningButton">朝食</button>               
+                    <button id="lunchButton">昼食</button>
+                    <button id="dinnerButton">夕食</button>
+                    <button id="otherButton">間食</button>
+                </div>
                 <!-- 出力場所 -->
                 <div id="output"></div>
             </div>
@@ -39,19 +41,64 @@
         <!-- 保存場所 -->
          <fieldset>
             <legend>朝食</legend>
-            <div id="morningArea"></div>
+            <button id="deleteMorningButton" class="deleteButton">1件削除</button>
+            <div id="morningArea">
+                <div class="mealItem">
+                    <div class="foodName">ごはん</div>
+                    <div class="nutrients">
+                        <p>エネルギー: 250kcal</p>
+                        <p>たんぱく質: 4g</p>
+                        <p>脂質: 1g</p>
+                        <p>炭水化物: 55g</p>
+                    </div>
+                    <div id="morningSum"></div>
+                </div>
+            </div>
         </fieldset>
          <fieldset>
             <legend>昼食</legend>
-            <div id="lunchArea"></div>
+            <button id="deleteLunchButton" class="deleteButton">1件削除</button>
+            <div id="lunchArea">
+                <div class="mealItem">
+                    <div class="foodName">ごはん</div>
+                    <div class="nutrients">
+                        <p>エネルギー: 250kcal</p>
+                        <p>たんぱく質: 4g</p>
+                        <p>脂質: 1g</p>
+                        <p>炭水化物: 55g</p>
+                    </div>
+                </div>
+            </div>
         </fieldset>
          <fieldset>
             <legend>夕食</legend>
-            <div id="dinnerArea"></div>
+            <button id="deleteDinnerButton" class="deleteButton">1件削除</button>
+            <div id="dinnerArea">
+                <div class="mealItem">
+                    <div class="foodName">ごはん</div>
+                    <div class="nutrients">
+                        <p>エネルギー: 250kcal</p>
+                        <p>たんぱく質: 4g</p>
+                        <p>脂質: 1g</p>
+                        <p>炭水化物: 55g</p>
+                    </div>
+                </div>
+            </div>
         </fieldset>
          <fieldset>
             <legend>間食</legend>
-            <div id="otherArea"></div>
+            <button id="deleteOtherButton" class="deleteButton">1件削除</button>
+            <div id="otherArea">
+                <div class="mealItem">
+                    <div class="foodName">ごはん</div>
+                    <div class="nutrients">
+                        <p>エネルギー: 250kcal</p>
+                        <p>たんぱく質: 4g</p>
+                        <p>脂質: 1g</p>
+                        <p>炭水化物: 55g</p>
+                    </div>
+                </div>
+            </div>
         </fieldset>
 
         
