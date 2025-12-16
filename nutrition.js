@@ -32,7 +32,6 @@ $('#searchButton').on('click', function(){
   // APIキー
   // food APIキー
 
-
   axios.post(`${translateUrl}?key=${apiKey}`,
       {
       q: inputText,
@@ -50,6 +49,10 @@ $('#searchButton').on('click', function(){
       .then(function (response){//うまくいったら実装
         console.log(response.data);
         const elements = [];
+
+          //計算用の箱
+        const nutrientValues = {};
+
 
         if (!Array.isArray(response.data.foods)|| response.data.foods.length === 0) {
           $('#output').html('<p>見つかりませんでした</p>');
@@ -70,6 +73,9 @@ $('#searchButton').on('click', function(){
               elements.push(
                 `<p>${label}: ${n.value}${n.unitName}</p>`
               );
+
+              //計算用の数値
+              nutrientValues[n.nutrientName] = n.value;
             }
           }
         console.log(elements);
@@ -92,9 +98,10 @@ $('#searchButton').on('click', function(){
           }
 
           morning.push({
-            id: Date.now(), //削除用の一意ID
-            inputText:inputText,
-            elements:elements,
+            id: Date.now(), //削除用の一意ID 
+            inputText: inputText,//表示用
+            elements: [...elements],
+            nutrients: { ...nutrientValues }//計算用
           });
           console.log(morning);
 
@@ -105,7 +112,6 @@ $('#searchButton').on('click', function(){
 
           // 朝食エリアを再描画
           renderMorning(morning);
-          // $('#morningArea').html(inputText + elements.join(''));//表示
 
           alert('朝食を保存しました');
 
@@ -126,11 +132,11 @@ $('#searchButton').on('click', function(){
             lunch = [];
           }
 
-
           lunch.push({
-            id: Date.now(), //削除用の一意ID     
-            inputText:inputText,
-            elements:elements,
+            id: Date.now(), //削除用の一意ID 
+            inputText: inputText,//表示用
+            elements: [...elements],
+            nutrients: { ...nutrientValues }//計算用
           });
           console.log(lunch);
 
@@ -162,9 +168,10 @@ $('#searchButton').on('click', function(){
           }
 
           dinner.push({
-            id: Date.now(),  //削除用の一意ID     
-            inputText:inputText,
-            elements:elements,
+            id: Date.now(), //削除用の一意ID 
+            inputText: inputText,//表示用
+            elements: [...elements],
+            nutrients: { ...nutrientValues }//計算用
           });
           console.log(dinner);
 
@@ -196,11 +203,25 @@ $('#searchButton').on('click', function(){
           }
 
           other.push({
-            id: Date.now(),  //削除用の一意ID     
-            inputText:inputText,
-            elements:elements,
+            id: Date.now(), //削除用の一意ID 
+            inputText: inputText,//表示用
+            elements: [...elements],
+            nutrients: { ...nutrientValues }//計算用
           });
           console.log(other);
+
+          //合計処理の箱
+          let totalEnergy = 0;
+
+          for (let i = 0; i < other.length; i++) {
+            if (other[i].nutrients?.Energy) {
+              totalEnergy = totalEnergy + other[i].nutrients.Energy;
+            }
+          }
+
+          console.log('おやつ合計カロリー:', totalEnergy);
+          $('#sumOther').html(totalEnergy); 
+
 
           const json = JSON.stringify(other);//JSON形式に変換
           console.log(json);
@@ -211,10 +232,7 @@ $('#searchButton').on('click', function(){
           renderOther(other);
 
           alert('おやつを保存しました');
-
         });
-
-
 
 
       })
@@ -239,7 +257,7 @@ function renderMorning(morning) {
   }
     $('#morningArea').html(html);
 
-    $('#morningArea, .mealItem').on('click', function () {
+    $('#morningArea .mealItem').on('click', function () {
     currentFoodId = $(this).data('id');
     console.log('選択中ID:', currentFoodId);
 
@@ -284,7 +302,7 @@ function renderMorning(morning) {
     if (localStorage.getItem('meal_1')){
       morning = JSON.parse(localStorage.getItem('meal_1'));
 
-    // IDが一致しないものだけ残す
+    // IDが一致しないものだけ残す=一致したものだけ取り出す
     morning = morning.filter(
       (food) => food.id !== Number(currentFoodId)
     );
@@ -430,7 +448,7 @@ $('#deleteDinnerButton').on('click', function () {
   localStorage.setItem('meal_3', JSON.stringify(dinner));
 
   // 再描画
-  renderMorning(dinner);
+  renderDinner(dinner);
 
   // 選択解除
   currentFoodId = null;
@@ -498,7 +516,7 @@ $('#deleteDinnerButton').on('click', function () {
     localStorage.setItem('meal_4', JSON.stringify(other));
 
     // 再描画
-    renderMorning(other);
+    renderOther(other);
 
     // 選択解除
     currentFoodId = null;

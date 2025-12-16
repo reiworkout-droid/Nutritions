@@ -12,17 +12,17 @@
     </header>
 
     <main>
-        <fieldset>
+        <fieldset id="total">
             <legend id="resultArea">1日合計</legend>
             <div>
-                <p id="calorie">総カロリー</p>
-                <p id="protein">総タンパク質(g)</p>
-                <p id="fat">総脂質(g)</p>
-                <p id="carbo">総炭水化物(g)</p>
+                <p id="calorie">総カロリー：</p>
+                <p id="protein">総タンパク質(g)：</p>
+                <p id="fat">総脂質(g)：</p>
+                <p id="carbo">総炭水化物(g)：</p>
             </div>
         </fieldset>
 
-        <fieldset>
+        <fieldset id="search">
             <legend class="form">食品検索</legend>
             <div>
                 <input type="text" id="form">
@@ -39,65 +39,68 @@
         </fieldset>
 
         <!-- 保存場所 -->
-         <fieldset>
-            <legend>朝食</legend>
+         <fieldset id="morning">
+            <legend id="titleMorning">朝食</legend>
             <button id="deleteMorningButton" class="deleteButton">1件削除</button>
             <div id="morningArea">
                 <div class="mealItem">
-                    <div class="foodName">ごはん</div>
+                    <div class="foodName"></div>
                     <div class="nutrients">
-                        <p>エネルギー: 250kcal</p>
+                        <!-- <p>エネルギー: 250kcal</p>
                         <p>たんぱく質: 4g</p>
                         <p>脂質: 1g</p>
-                        <p>炭水化物: 55g</p>
+                        <p>炭水化物: 55g</p> -->
                     </div>
                     <div id="morningSum"></div>
                 </div>
             </div>
         </fieldset>
-         <fieldset>
-            <legend>昼食</legend>
+
+         <fieldset id="lunch">
+            <legend id="titleLunch">昼食</legend>
             <button id="deleteLunchButton" class="deleteButton">1件削除</button>
             <div id="lunchArea">
                 <div class="mealItem">
-                    <div class="foodName">ごはん</div>
+                    <div class="foodName"></div>
                     <div class="nutrients">
-                        <p>エネルギー: 250kcal</p>
+                        <!-- <p>エネルギー: 250kcal</p>
                         <p>たんぱく質: 4g</p>
                         <p>脂質: 1g</p>
-                        <p>炭水化物: 55g</p>
+                        <p>炭水化物: 55g</p> -->
                     </div>
                 </div>
             </div>
         </fieldset>
-         <fieldset>
-            <legend>夕食</legend>
+
+         <fieldset id="dinner">
+            <legend id="titleDinner">夕食</legend>
             <button id="deleteDinnerButton" class="deleteButton">1件削除</button>
             <div id="dinnerArea">
                 <div class="mealItem">
-                    <div class="foodName">ごはん</div>
+                    <div class="foodName"></div>
                     <div class="nutrients">
-                        <p>エネルギー: 250kcal</p>
+                        <!-- <p>エネルギー: 250kcal</p>
                         <p>たんぱく質: 4g</p>
                         <p>脂質: 1g</p>
-                        <p>炭水化物: 55g</p>
+                        <p>炭水化物: 55g</p> -->
                     </div>
                 </div>
             </div>
         </fieldset>
-         <fieldset>
-            <legend>間食</legend>
+
+         <fieldset id="other">
+            <legend id="titleOther">間食</legend>
             <button id="deleteOtherButton" class="deleteButton">1件削除</button>
             <div id="otherArea">
                 <div class="mealItem">
-                    <div class="foodName">ごはん</div>
+                    <div class="foodName"></div>
                     <div class="nutrients">
-                        <p>エネルギー: 250kcal</p>
-                        <p>たんぱく質: 4g</p>
-                        <p>脂質: 1g</p>
-                        <p>炭水化物: 55g</p>
                     </div>
                 </div>
+            </div>
+            <div id="sumOtherArea">
+                <p class="sum">合計：</p> 
+                <div id="sumOther"></div>
             </div>
         </fieldset>
 

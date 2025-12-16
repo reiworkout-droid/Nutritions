@@ -1,5 +1,10 @@
 h1 {
     text-align: center;
+    text-decoration: underline;
+    text-decoration-color: oklch(0.9 0.15 500);
+    text-decoration-thickness: 0.5em;
+    text-underline-offset: -0.1em; /* 線の位置。テキストに重なるようにやや上部にする */
+
 }
 
 @media(max-width:600px){
@@ -8,19 +13,69 @@ h1 {
     }
 }
 
-@media(max-width:600px){
-    #goButton {}
+
+#total {
+    border-radius: 20px;
+    background-color: oklch(0.9 0.14 40);
 }
 
 #resultArea {
     border: 2px solid;
+    border-radius: 20px;
+    background-color: oklch(1 0.4 100);
+    padding: 5px;
+}
+
+#search {
+    border: 1.5px solid;
+    border-radius: 20px;
+    background-color: #EEEEEE;
+    margin-top: 30px;
+    padding: 10px;
 }
 
 .form {
     border: 2px solid;
-    margin-top: 30px;
-    padding: 10px;
+    border-radius: 20px;
+    background-color: oklch(1 0.4 100);
+    padding: 5px;
 }
+
+#form {
+    margin-left: 5%;
+    width: 40%;
+}
+
+#searchButton {
+    background-color: oklch(1 0.3 300);
+    margin: 2% 0%;
+}
+
+
+#goButton {
+    display: flex;
+    gap: 5%;
+    margin: 2% 0%;
+    margin-left: 5%;
+}
+
+
+#morningButton {
+    background-color: oklch(0.9 0.16 100);
+}
+
+#lunchButton {
+    background-color: oklch(0.9 0.16 30);
+}
+
+#dinnerButton {
+    background-color: oklch(0.9 0.15 120);
+}
+
+#otherButton {
+    background-color: oklch(0.9 0.05 250);
+}
+
 
 #output {
     display: flex;
@@ -44,4 +99,61 @@ h1 {
 .nutrients {
     display: flex;
     gap: 5%;
+}
+
+#morning {
+    border-radius: 20px;
+    background-color: oklch(0.9 0.16 100);
+    margin-top: 20px;
+}
+
+#titleMorning {
+    border: 2px solid;
+    border-radius: 20px;
+    background-color: oklch(1 0.4 100);
+    padding: 5px;
+}
+
+#lunch {    
+    border-radius: 20px;
+    background-color: oklch(0.9 0.16 30);
+    margin-top: 20px;
+}
+
+#titleLunch {
+    border: 2px solid;
+    border-radius: 20px;
+    background-color: oklch(1 0.4 100);
+    padding: 5px;
+}
+
+#dinner {
+    border-radius: 20px;
+    background-color: oklch(0.9 0.15 120);
+    margin-top: 20px;
+}
+
+#titleDinner {
+    border: 2px solid;
+    border-radius: 20px;
+    background-color: oklch(1 0.4 100);
+    padding: 5px;
+}
+
+#other {
+    border-radius: 20px;
+    background-color: oklch(0.9 0.05 250);
+    margin-top: 20px;
+}
+
+#titleOther {
+    border: 2px solid;
+    border-radius: 20px;
+    background-color: oklch(1 0.4 100);
+    padding: 5px;
+}
+
+#sumOtherArea {
+    display: flex;
+    align-items: center;
 }
