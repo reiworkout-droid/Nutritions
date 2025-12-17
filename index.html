@@ -15,10 +15,10 @@
         <fieldset id="total">
             <legend id="resultArea">1日合計</legend>
             <div>
-                <p id="calorie">総カロリー：</p>
-                <p id="protein">総タンパク質(g)：</p>
-                <p id="fat">総脂質(g)：</p>
-                <p id="carbo">総炭水化物(g)：</p>
+                <p id="calorie">総カロリー： <span></span> KCAL</p>
+                <p id="protein">総タンパク質(g)： <span></span> g</p>
+                <p id="fat">総脂質(g)： <span></span> g</p>
+                <p id="carbo">総炭水化物(g)： <span></span> g</p>
             </div>
         </fieldset>
 
@@ -46,13 +46,18 @@
                 <div class="mealItem">
                     <div class="foodName"></div>
                     <div class="nutrients">
-                        <!-- <p>エネルギー: 250kcal</p>
-                        <p>たんぱく質: 4g</p>
-                        <p>脂質: 1g</p>
-                        <p>炭水化物: 55g</p> -->
                     </div>
                     <div id="morningSum"></div>
                 </div>
+            </div>
+            <div id="sumMorningArea">
+                <p class="sum">合計：</p> 
+                <div id="sumMorning" class="nutrition-summary">
+                    <div id="sumMorningEnergy" class="nutri-item">E: <span></span> kcal</div>
+                    <div id="sumMorningProtein" class="nutri-item">P: <span></span> g</div>
+                    <div id="sumMorningFat" class="nutri-item">F: <span></span> g</div>
+                    <div id="sumMorningCarb" class="nutri-item">C: <span></span> g</div>
+                </div>            
             </div>
         </fieldset>
 
@@ -63,12 +68,17 @@
                 <div class="mealItem">
                     <div class="foodName"></div>
                     <div class="nutrients">
-                        <!-- <p>エネルギー: 250kcal</p>
-                        <p>たんぱく質: 4g</p>
-                        <p>脂質: 1g</p>
-                        <p>炭水化物: 55g</p> -->
                     </div>
                 </div>
+            </div>
+            <div id="sumLunchArea">
+                <p class="sum">合計：</p> 
+                <div id="sumLunch" class="nutrition-summary">
+                    <div id="sumLunchEnergy" class="nutri-item">E: <span></span> kcal</div>
+                    <div id="sumLunchProtein" class="nutri-item">P: <span></span> g</div>
+                    <div id="sumLunchFat" class="nutri-item">F: <span></span> g</div>
+                    <div id="sumLunchCarb" class="nutri-item">C: <span></span> g</div>
+                </div>            
             </div>
         </fieldset>
 
@@ -79,12 +89,17 @@
                 <div class="mealItem">
                     <div class="foodName"></div>
                     <div class="nutrients">
-                        <!-- <p>エネルギー: 250kcal</p>
-                        <p>たんぱく質: 4g</p>
-                        <p>脂質: 1g</p>
-                        <p>炭水化物: 55g</p> -->
                     </div>
                 </div>
+            </div>
+            <div id="sumDinnerArea">
+                <p class="sum">合計：</p> 
+                <div id="sumDinner" class="nutrition-summary">
+                    <div id="sumDinnerEnergy" class="nutri-item">E: <span></span> kcal</div>
+                    <div id="sumDinnerProtein" class="nutri-item">P: <span></span> g</div>
+                    <div id="sumDinnerFat" class="nutri-item">F: <span></span> g</div>
+                    <div id="sumDinnerCarb" class="nutri-item">C: <span></span> g</div>
+                </div>            
             </div>
         </fieldset>
 
@@ -100,7 +115,12 @@
             </div>
             <div id="sumOtherArea">
                 <p class="sum">合計：</p> 
-                <div id="sumOther"></div>
+                <div id="sumOther" class="nutrition-summary">
+                    <div id="sumOtherEnergy" class="nutri-item">E: <span></span> kcal</div>
+                    <div id="sumOtherProtein" class="nutri-item">P: <span></span> g</div>
+                    <div id="sumOtherFat" class="nutri-item">F: <span></span> g</div>
+                    <div id="sumOtherCarb" class="nutri-item">C: <span></span> g</div>
+                </div>            
             </div>
         </fieldset>
 
