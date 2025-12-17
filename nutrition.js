@@ -5,8 +5,12 @@ let foods = [];
 let currentFoodId = null;
 
 
-$('#searchButton').on('click', function(){
-//入力内容の取得
+$('#searchButton').on('click', async function(){
+
+  //検索中・・・の表示
+  $('#searchButton').text('検索中・・・');
+
+  //入力内容の取得
   const inputText = $('#form').val().trim();
   if(!inputText) return;
 
@@ -32,7 +36,7 @@ $('#searchButton').on('click', function(){
   // APIキー
   // food APIキー
 
-  axios.post(`${translateUrl}?key=${apiKey}`,
+  await axios.post(`${translateUrl}?key=${apiKey}`,
       {
       q: inputText,
       target: 'en'
@@ -81,6 +85,9 @@ $('#searchButton').on('click', function(){
         console.log(elements);
 
         $('#output').html(elements.join(''));//カンマなし
+
+        //検索ボタンを戻す
+        $('#searchButton').text('検索');
 
           // 朝食に保存
         $('#morningButton').off('click').on('click', function(){
@@ -168,6 +175,9 @@ $('#searchButton').on('click', function(){
 
           // 朝食エリアを再描画
           renderMorning(morning);
+
+          //呼び出し
+          calculateDailyTotal();
 
           alert('朝食を保存しました');
 
@@ -260,6 +270,9 @@ $('#searchButton').on('click', function(){
           // 昼食エリアを再描画
           renderLunch(lunch);
 
+          //呼び出し
+          calculateDailyTotal();
+
           alert('昼食を保存しました');
 
         });
@@ -350,6 +363,9 @@ $('#searchButton').on('click', function(){
 
           // 夕食エリアを再描画
           renderDinner(dinner);
+
+          //呼び出し
+          calculateDailyTotal();
 
           alert('夕食を保存しました');
 
@@ -443,6 +459,9 @@ $('#searchButton').on('click', function(){
           // おやつエリアを再描画
           renderOther(other);
 
+          //呼び出し
+          calculateDailyTotal();
+
           alert('おやつを保存しました');
         });
 
@@ -514,6 +533,10 @@ function renderMorning(morning) {
 
     const morning = JSON.parse(json);//オブジェクトに戻す
     renderMorning(morning);
+    
+    //呼び出し
+    calculateDailyTotal();
+
   }
 
   //削除ボタンクリックアクション
@@ -547,6 +570,9 @@ function renderMorning(morning) {
     // 選択解除
     currentFoodId = null;
     alert('1件削除しました');
+
+    //呼び出し
+    calculateDailyTotal();
   }
   });        
 
@@ -611,6 +637,10 @@ function renderLunch(lunch) {
 
     const lunch = JSON.parse(json);//オブジェクトに戻す
     renderLunch(lunch);
+
+    //呼び出し
+    calculateDailyTotal();
+
   }
 
   //削除ボタンクリックアクション
@@ -644,6 +674,9 @@ $('#deleteLunchButton').on('click', function () {
   // 選択解除
   currentFoodId = null;
   alert('1件削除しました');
+
+  //呼び出し
+  calculateDailyTotal();
 }
 });        
 
@@ -709,6 +742,10 @@ function renderDinner(dinner) {
 
     const dinner = JSON.parse(json);//オブジェクトに戻す
     renderDinner(dinner);
+
+    //呼び出し
+    calculateDailyTotal();
+ 
   }
 
   //削除ボタンクリックアクション
@@ -742,6 +779,9 @@ $('#deleteDinnerButton').on('click', function () {
   // 選択解除
   currentFoodId = null;
   alert('1件削除しました');
+
+  //呼び出し
+  calculateDailyTotal();
 }
 });        
 
@@ -808,6 +848,10 @@ function renderOther(other) {
 
     const other = JSON.parse(json);//オブジェクトに戻す
     renderOther(other);
+
+    //呼び出し
+    calculateDailyTotal();
+
   }
 
     //削除ボタンクリックアクション
@@ -841,6 +885,9 @@ function renderOther(other) {
     // 選択解除
     currentFoodId = null;
     alert('1件削除しました');
+
+    //呼び出し
+    calculateDailyTotal();
   }
 });
 
