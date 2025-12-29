@@ -8,7 +8,7 @@ let currentFoodId = null;
 $('#searchButton').on('click', async function(){
 
   //検索中・・・の表示
-  $('#searchButton').text('検索中・・・');
+  $('#searchButton').text('検索中•••');
 
   //入力内容の取得
   const inputText = $('#form').val().trim();
@@ -31,29 +31,31 @@ $('#searchButton').on('click', async function(){
   ];
 
 
-  // 日本語→英語
-  const translateUrl = 'https://translation.googleapis.com/language/translate/v2'
-  // APIキー
-  const apiKey = 'AIzaSyCA_MVXElN9ephOmoZNmhgcXfu2iSEPjjc';
-  // food APIキー
-  const foodApiKey = 'edeqBNHYuR9XIfTDBxUdZ0314Y3ssHKorPtUe0lf';
-
-  await axios.post(`${translateUrl}?key=${apiKey}`,
-      {
+  axios.post('/homework/My-Nutrition/php/translate_proxy.php',{
       q: inputText,
       target: 'en'
     })
-  .then(function (translateRes){
-    const translatedText = translateRes.data.data.translations[0].translatedText;
-    console.log('Translated:', translatedText);
+    .then(function (translateRes) {
 
-  // 英語で食品検索(APIキー)
-const searchUrl = `/homework/My-Nutrition/php/usda_proxy.php?q=${encodeURIComponent(translatedText)}`;
-console.log(searchUrl);
-    return axios.get(searchUrl);
-  })
-      .then(function (response){//うまくいったら実装
-        console.log(response.data);
+      // ① 翻訳結果
+      const translatedText =
+        translateRes.data.data.translations[0].translatedText;
+
+      console.log('Translated:', translatedText);
+
+      // ② USDA 用 URL（APIキーはPHP側）
+      const searchUrl =
+        `/homework/My-Nutrition/php/usda_proxy.php?q=${encodeURIComponent(translatedText)}`;
+
+      console.log(searchUrl);
+
+      // ③ 次の then に渡す
+      return axios.get(searchUrl);
+    })
+    .then(function (response) {
+
+      // ④ USDA の結果
+      console.log(response.data);
         const elements = [];
 
           //計算用の箱
@@ -87,7 +89,10 @@ console.log(searchUrl);
         console.log(elements);
 
         $('#output').html(elements.join(''));//カンマなし
-        $('#g').html(`<div>分量：<input type="number" id="g">g</div>`)
+        $('#g').html(`
+          <div>分量：<input type="number" id="g">g</div>
+          <button id="inputButton">保存</button>
+          `)
 
         //検索ボタンを戻す
         $('#searchButton').text('検索');
@@ -469,13 +474,13 @@ console.log(searchUrl);
         });
 
 
-      })
-      .catch(function(error) {//うまくいかんかったら
-        console.log(error);
-        console.log('status:', error.response?.status);
-        console.log('data:', error.response?.data);
-      });
-    });  
+    })
+    .catch(function(error) {//うまくいかんかったら
+      console.log(error);
+      console.log('status:', error.response?.status);
+      console.log('data:', error.response?.data);
+    });
+  });  
 
 function renderMorning(morning) {
   let html = ''; // 表示用HTMLを初期化

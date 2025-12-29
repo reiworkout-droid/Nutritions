@@ -1,8 +1,15 @@
+<?php
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../css/input.css">
     <title>何をどんだけ食うたと？</title>
 </head>
 <body>
@@ -10,8 +17,8 @@
     <legend class="form">食品検索</legend>
     <div>
         <input type="text" id="form">
-        <button id="searchButton">検索</button>
-        <div id="goButton"></div>
+        <button id="searchButton">検索</button><br>
+        <button onclick="location.href='./read.php'" id="goButton">一覧画面</button>
         <!-- 出力場所 -->
         <div id="output"></div>
         <div id="g"></div>
