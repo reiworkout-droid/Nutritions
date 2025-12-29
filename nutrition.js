@@ -64,6 +64,7 @@ $('#searchButton').on('click', async function(){
 
         if (!Array.isArray(response.data.foods)|| response.data.foods.length === 0) {
           $('#output').html('<p>見つかりませんでした</p>');
+          $('#searchButton').html('検索');
           return;
         };
 
@@ -89,10 +90,8 @@ $('#searchButton').on('click', async function(){
         console.log(elements);
 
         $('#output').html(elements.join(''));//カンマなし
-        $('#g').html(`
-          <div>分量：<input type="number" id="g">g</div>
-          <button id="inputButton">保存</button>
-          `)
+        $('#g').html(`<p>分量：<span><input type="number" id="g"></span>g</p>`)
+        $('#saveArea').html(`<button id="saveButton">保存</button>`)
 
         //検索ボタンを戻す
         $('#searchButton').text('検索');
@@ -549,8 +548,7 @@ if (localStorage.getItem('meal_1')){
 
 //追加ボタンクリックアクション
 $('#addMorningButton').on('click', function() {
-  alert('OK');
-  window.location.href = './php/input.php';
+
 })
 
 //削除ボタンクリックアクション

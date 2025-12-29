@@ -15,8 +15,9 @@
     </header>
 
     <main>
-        <button onclick="location.href='./input.php'" id="goButton">一覧画面</button>
-
+        <div id="goList">
+            <button onclick="location.href='./input.php'" id="goButton">入力画面</button>
+        </div>
         <fieldset id="total">
             <legend id="resultArea">1日合計</legend>
             <div>
@@ -31,7 +32,7 @@
          <fieldset id="morning">
             <legend id="titleMorning">朝食</legend>
             <div class="addButton">
-                <button id="addMorningButton" class="addButton">食事追加</button>
+                <button onclick="location.href='./input.php'" id="addMorningButton" class="addButton">食事追加</button>
                 <button id="deleteMorningButton" class="deleteButton">1件削除</button>
             </div>
                 <div id="morningArea">
@@ -56,7 +57,7 @@
          <fieldset id="lunch">
             <legend id="titleLunch">昼食</legend>
             <div class="addButton">
-                <button id="addLunchButton" class="addButton">食事追加</button>
+                <button onclick="location.href='./input.php'" id="addLunchButton" class="addButton">食事追加</button>
                 <button id="deleteLunchButton" class="deleteButton">1件削除</button>
             </div>
             <div id="lunchArea">
@@ -80,7 +81,7 @@
          <fieldset id="dinner">
             <legend id="titleDinner">夕食</legend>
             <div class="addButton">
-                <button id="addDinnerButton" class="addButton">食事追加</button>
+                <button onclick="location.href='./input.php'" id="addDinnerButton" class="addButton">食事追加</button>
                 <button id="deleteDinnerButton" class="deleteButton">1件削除</button>
             </div>
                 <div id="dinnerArea">
@@ -104,7 +105,7 @@
          <fieldset id="other">
             <legend id="titleOther">間食</legend>
             <div class="addButton">
-                <button id="addOtherButton" class="addButton">食事追加</button>
+                <button onclick="location.href='./input.php'" id="addOtherButton" class="addButton">食事追加</button>
                 <button id="deleteOtherButton" class="deleteButton">1件削除</button>
             </div>
                 <div id="otherArea">
