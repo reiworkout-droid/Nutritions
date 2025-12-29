@@ -34,7 +34,9 @@ $('#searchButton').on('click', async function(){
   // 日本語→英語
   const translateUrl = 'https://translation.googleapis.com/language/translate/v2'
   // APIキー
+  const apiKey = 'AIzaSyCA_MVXElN9ephOmoZNmhgcXfu2iSEPjjc';
   // food APIキー
+  const foodApiKey = 'edeqBNHYuR9XIfTDBxUdZ0314Y3ssHKorPtUe0lf';
 
   await axios.post(`${translateUrl}?key=${apiKey}`,
       {
@@ -46,8 +48,8 @@ $('#searchButton').on('click', async function(){
     console.log('Translated:', translatedText);
 
   // 英語で食品検索(APIキー)
-    const searchUrl = `https://api.nal.usda.gov/fdc/v1/foods/search?query=${encodeURIComponent(translatedText)}&api_key=`;
-
+const searchUrl = `/homework/My-Nutrition/php/usda_proxy.php?q=${encodeURIComponent(translatedText)}`;
+console.log(searchUrl);
     return axios.get(searchUrl);
   })
       .then(function (response){//うまくいったら実装
@@ -85,6 +87,7 @@ $('#searchButton').on('click', async function(){
         console.log(elements);
 
         $('#output').html(elements.join(''));//カンマなし
+        $('#g').html(`<div>分量：<input type="number" id="g">g</div>`)
 
         //検索ボタンを戻す
         $('#searchButton').text('検索');
@@ -526,55 +529,61 @@ function renderMorning(morning) {
   });
 }
 
-  //読み込み時にデータの取得
+//読み込み時にデータの取得
+if (localStorage.getItem('meal_1')){
+  const json = localStorage.getItem('meal_1')
+  console.log(json);
+
+  const morning = JSON.parse(json);//オブジェクトに戻す
+  renderMorning(morning);
+  
+  //呼び出し
+  calculateDailyTotal();
+
+}
+
+//追加ボタンクリックアクション
+$('#addMorningButton').on('click', function() {
+  alert('OK');
+  window.location.href = './php/input.php';
+})
+
+//削除ボタンクリックアクション
+$('#deleteMorningButton').on('click', function () {
+  if (currentFoodId == null) {
+    alert('削除する食べ物を選択してください');
+    return;
+  }
+
+  if (!confirm('選択した食べ物を削除しますか？')) {
+    return;
+  }
+
+  let morning;
+
+  // localStorage から取得
   if (localStorage.getItem('meal_1')){
-    const json = localStorage.getItem('meal_1')
-    console.log(json);
+    morning = JSON.parse(localStorage.getItem('meal_1'));
 
-    const morning = JSON.parse(json);//オブジェクトに戻す
-    renderMorning(morning);
-    
-    //呼び出し
-    calculateDailyTotal();
+  // IDが一致しないものだけ残す=一致したものだけ取り出す
+  morning = morning.filter(
+    (food) => food.id !== Number(currentFoodId)
+  );
 
-  }
+  // 保存し直す
+  localStorage.setItem('meal_1', JSON.stringify(morning));
 
-  //削除ボタンクリックアクション
-  $('#deleteMorningButton').on('click', function () {
-    if (currentFoodId == null) {
-      alert('削除する食べ物を選択してください');
-      return;
-    }
+  // 再描画
+  renderMorning(morning);
 
-    if (!confirm('選択した食べ物を削除しますか？')) {
-      return;
-    }
+  // 選択解除
+  currentFoodId = null;
+  alert('1件削除しました');
 
-    let morning;
-
-    // localStorage から取得
-    if (localStorage.getItem('meal_1')){
-      morning = JSON.parse(localStorage.getItem('meal_1'));
-
-    // IDが一致しないものだけ残す=一致したものだけ取り出す
-    morning = morning.filter(
-      (food) => food.id !== Number(currentFoodId)
-    );
-
-    // 保存し直す
-    localStorage.setItem('meal_1', JSON.stringify(morning));
-
-    // 再描画
-    renderMorning(morning);
-
-    // 選択解除
-    currentFoodId = null;
-    alert('1件削除しました');
-
-    //呼び出し
-    calculateDailyTotal();
-  }
-  });        
+  //呼び出し
+  calculateDailyTotal();
+}
+});        
 
 
 //昼

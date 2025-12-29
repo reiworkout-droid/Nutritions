@@ -22,27 +22,14 @@
             </div>
         </fieldset>
 
-        <fieldset id="search">
-            <legend class="form">食品検索</legend>
-            <div>
-                <input type="text" id="form">
-                <button id="searchButton">検索</button>
-                <div id="goButton"> 
-                    <button id="morningButton">朝食</button>               
-                    <button id="lunchButton">昼食</button>
-                    <button id="dinnerButton">夕食</button>
-                    <button id="otherButton">間食</button>
-                </div>
-                <!-- 出力場所 -->
-                <div id="output"></div>
-            </div>
-        </fieldset>
-
         <!-- 保存場所 -->
          <fieldset id="morning">
             <legend id="titleMorning">朝食</legend>
-            <button id="deleteMorningButton" class="deleteButton">1件削除</button>
-            <div id="morningArea">
+            <div class="addButton">
+                <button id="addMorningButton" class="addButton">食事追加</button>
+                <button id="deleteMorningButton" class="deleteButton">1件削除</button>
+            </div>
+                <div id="morningArea">
                 <div class="mealItem">
                     <div class="foodName"></div>
                     <div class="nutrients">
@@ -63,7 +50,10 @@
 
          <fieldset id="lunch">
             <legend id="titleLunch">昼食</legend>
-            <button id="deleteLunchButton" class="deleteButton">1件削除</button>
+            <div class="addButton">
+                <button id="addLunchButton" class="addButton">食事追加</button>
+                <button id="deleteLunchButton" class="deleteButton">1件削除</button>
+            </div>
             <div id="lunchArea">
                 <div class="mealItem">
                     <div class="foodName"></div>
@@ -84,8 +74,11 @@
 
          <fieldset id="dinner">
             <legend id="titleDinner">夕食</legend>
-            <button id="deleteDinnerButton" class="deleteButton">1件削除</button>
-            <div id="dinnerArea">
+            <div class="addButton">
+                <button id="addDinnerButton" class="addButton">食事追加</button>
+                <button id="deleteDinnerButton" class="deleteButton">1件削除</button>
+            </div>
+                <div id="dinnerArea">
                 <div class="mealItem">
                     <div class="foodName"></div>
                     <div class="nutrients">
@@ -105,8 +98,11 @@
 
          <fieldset id="other">
             <legend id="titleOther">間食</legend>
-            <button id="deleteOtherButton" class="deleteButton">1件削除</button>
-            <div id="otherArea">
+            <div class="addButton">
+                <button id="addOtherButton" class="addButton">食事追加</button>
+                <button id="deleteOtherButton" class="deleteButton">1件削除</button>
+            </div>
+                <div id="otherArea">
                 <div class="mealItem">
                     <div class="foodName"></div>
                     <div class="nutrients">
