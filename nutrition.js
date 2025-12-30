@@ -90,11 +90,43 @@ $('#searchButton').on('click', async function(){
         console.log(elements);
 
         $('#output').html(elements.join(''));//カンマなし
-        $('#g').html(`<p>分量：<span><input type="number" id="g"></span>g</p>`)
+        $('#g').html(`<p>分量：<span><input type="number" id="gramInput"></span>g</p>`)
         $('#saveArea').html(`<button id="saveButton">保存</button>`)
 
         //検索ボタンを戻す
         $('#searchButton').text('検索');
+
+        $('#saveButton').on('click', function () {
+
+          const gram = Number($('#gramInput').val());
+
+          const per1g = {
+            energy: (nutrientValues['Energy'] || 0) / 100,
+            protein: (nutrientValues['Protein'] || 0) / 100,
+            fat: (nutrientValues['Total lipid (fat)'] || 0) / 100,
+            carb: (nutrientValues['Carbohydrate, by difference'] || 0) / 100
+          };
+
+          const total = {
+            energy: per1g.energy * gram,
+            protein: per1g.protein * gram,
+            fat: per1g.fat * gram,
+            carb: per1g.carb * gram
+          };
+
+          const saveData = {
+            food_name: inputText,
+            gram: gram,
+            energy: Math.round(total.energy * 10) / 10,
+            protein: Math.round(total.protein * 10) / 10,
+            fat: Math.round(total.fat * 10) / 10,
+            carb: Math.round(total.carb * 10) / 10
+          };
+
+          console.log('保存データ', saveData);
+          // axios.post('save.php', saveData);
+        });
+
 
           // 朝食に保存
         $('#morningButton').off('click').on('click', function(){

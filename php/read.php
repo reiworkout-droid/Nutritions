@@ -1,5 +1,11 @@
+<?php
+$date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
+//タイムスタンプ形式
+$timestamp = strtotime($date);
+//表示用に変更
+$displayDate = date('Y年n月j日', $timestamp);
 
-
+?>
 
 <!DOCTYPE html>
 <html lang="ja">
@@ -11,12 +17,12 @@
 </head>
 <body>
     <header>
-        <h1>今日何食うたと？</h1>
+        <h1><?php echo $displayDate; ?>何食うたと？</h1>
     </header>
 
     <main>
         <div id="goList">
-            <button onclick="location.href='./input.php'" id="goButton">入力画面</button>
+            <button onclick="location.href='./calender.php'" id="dateButton">日付選択</button>
         </div>
         <fieldset id="total">
             <legend id="resultArea">1日合計</legend>
