@@ -5,6 +5,24 @@ $timestamp = strtotime($date);
 //表示用に変更
 $displayDate = date('Y年n月j日', $timestamp);
 
+// DB接続　毎回決まった構文（dbnameのみ変更）
+// 各種項目設定
+$dbn ='mysql:dbname=My_nutrition;charset=utf8mb4;port=3306;host=localhost';
+$user = 'root';
+$pwd = '';
+
+// DB接続 決まった構文
+try {
+  $pdo = new PDO($dbn, $user, $pwd);
+} catch (PDOException $e) {
+  echo json_encode(["db error" => "{$e->getMessage()}"]);
+  exit();
+}
+
+// SQL作成&実行
+$sql = 'SELECT food, gram, protein, fat, carb, energy FROM my_nutrition';
+
+
 ?>
 
 <!DOCTYPE html>
@@ -38,7 +56,7 @@ $displayDate = date('Y年n月j日', $timestamp);
          <fieldset id="morning">
             <legend id="titleMorning">朝食</legend>
             <div class="addButton">
-                <button onclick="location.href='./input.php'" id="addMorningButton" class="addButton">食事追加</button>
+                <button class="addMeal" data-meal="1">食事追加</button>
                 <button id="deleteMorningButton" class="deleteButton">1件削除</button>
             </div>
                 <div id="morningArea">
@@ -63,7 +81,7 @@ $displayDate = date('Y年n月j日', $timestamp);
          <fieldset id="lunch">
             <legend id="titleLunch">昼食</legend>
             <div class="addButton">
-                <button onclick="location.href='./input.php'" id="addLunchButton" class="addButton">食事追加</button>
+                <button class="addMeal" data-meal="2">食事追加</button>
                 <button id="deleteLunchButton" class="deleteButton">1件削除</button>
             </div>
             <div id="lunchArea">
@@ -87,7 +105,7 @@ $displayDate = date('Y年n月j日', $timestamp);
          <fieldset id="dinner">
             <legend id="titleDinner">夕食</legend>
             <div class="addButton">
-                <button onclick="location.href='./input.php'" id="addDinnerButton" class="addButton">食事追加</button>
+                <button class="addMeal" data-meal="3">食事追加</button>
                 <button id="deleteDinnerButton" class="deleteButton">1件削除</button>
             </div>
                 <div id="dinnerArea">
@@ -111,7 +129,7 @@ $displayDate = date('Y年n月j日', $timestamp);
          <fieldset id="other">
             <legend id="titleOther">間食</legend>
             <div class="addButton">
-                <button onclick="location.href='./input.php'" id="addOtherButton" class="addButton">食事追加</button>
+                <button class="addMeal" data-meal="4">食事追加</button>
                 <button id="deleteOtherButton" class="deleteButton">1件削除</button>
             </div>
                 <div id="otherArea">

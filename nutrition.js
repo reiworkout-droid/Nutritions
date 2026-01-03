@@ -93,6 +93,14 @@ $('#searchButton').on('click', async function(){
         $('#g').html(`<p>分量：<span><input type="number" id="gramInput"></span>g</p>`)
         $('#saveArea').html(`<button id="saveButton">保存</button>`)
 
+        //追加ボタンクリックアクション
+        $('.addMeal').on('click', function() {
+          const timing = $(this).data('meal');
+          const date = $('#date').val();
+
+          location.href = `input.php?timing=${timing}&date=${date}`;
+        });
+
         //検索ボタンを戻す
         $('#searchButton').text('検索');
 
@@ -114,16 +122,25 @@ $('#searchButton').on('click', async function(){
             carb: per1g.carb * gram
           };
 
-          const saveData = {
-            food_name: inputText,
-            gram: gram,
-            energy: Math.round(total.energy * 10) / 10,
-            protein: Math.round(total.protein * 10) / 10,
-            fat: Math.round(total.fat * 10) / 10,
-            carb: Math.round(total.carb * 10) / 10
-          };
+          // const saveData = {
+          //   food_name: inputText,
+          //   gram: gram,
+          //   energy: Math.round(total.energy * 10) / 10,
+          //   protein: Math.round(total.protein * 10) / 10,
+          //   fat: Math.round(total.fat * 10) / 10,
+          //   carb: Math.round(total.carb * 10) / 10
+          // };
 
-          console.log('保存データ', saveData);
+          // 保存
+          $('#foodHidden').val(inputText);
+          $('#gram').val(gram);
+          $('#energy').val(Math.round(total.energy * 10) / 10);
+          $('#protein').val(Math.round(total.protein * 10) / 10);
+          $('#fat').val(Math.round(total.fat * 10) / 10);
+          $('#carb').val(Math.round(total.carb * 10) / 10);
+
+          $('#saveForm').submit();
+
           // axios.post('save.php', saveData);
         });
 
@@ -578,10 +595,6 @@ if (localStorage.getItem('meal_1')){
 
 }
 
-//追加ボタンクリックアクション
-$('#addMorningButton').on('click', function() {
-
-})
 
 //削除ボタンクリックアクション
 $('#deleteMorningButton').on('click', function () {
