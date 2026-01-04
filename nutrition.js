@@ -950,51 +950,51 @@ function renderOther(other) {
 //   }
 // });
 
-function calculateDailyTotal() {
-  //ローカルストレージのKeyを配列に入れる
-  const mealKeys = ['meal_1', 'meal_2', 'meal_3', 'meal_4'];
+// function calculateDailyTotal() {
+//   //ローカルストレージのKeyを配列に入れる
+//   const mealKeys = ['meal_1', 'meal_2', 'meal_3', 'meal_4'];
 
-  //合計用の箱
-  let totalEnergy = 0;
-  let totalProtein = 0;
-  let totalFat = 0;
-  let totalCarbohydrate = 0;
+//   //合計用の箱
+//   let totalEnergy = 0;
+//   let totalProtein = 0;
+//   let totalFat = 0;
+//   let totalCarbohydrate = 0;
 
-  //mealKeysの中身（meal_1~4）を順番に取ってローカルストレージの中身（文字列）を取得
-  for (const key of mealKeys) {
-    const json = localStorage.getItem(key);
-    if (!json) continue;//jsonがない時は次へ進む
+//   //mealKeysの中身（meal_1~4）を順番に取ってローカルストレージの中身（文字列）を取得
+//   for (const key of mealKeys) {
+//     const json = localStorage.getItem(key);
+//     if (!json) continue;//jsonがない時は次へ進む
 
-    //オブジェクトに戻す
-    const meals = JSON.parse(json);
+//     //オブジェクトに戻す
+//     const meals = JSON.parse(json);
 
-    //オブジェクト内のnutrientsをnに入れる
-    for (const meal of meals) {
-      const n = meal.nutrients;
-      if (!n) continue;//nがない時は次へ進む
+//     //オブジェクト内のnutrientsをnに入れる
+//     for (const meal of meals) {
+//       const n = meal.nutrients;
+//       if (!n) continue;//nがない時は次へ進む
 
-      //()が0,null,undefinedじゃないときに実行
-      if (n.Energy) totalEnergy += n.Energy;//Energyがあれば合計する
-      if (n.Protein) totalProtein += n.Protein;//Proteinがあれば合計する
-      if (n['Total lipid (fat)']) totalFat += n['Total lipid (fat)'];//Total lipid (fat)があれば合計する
-      if (n['Carbohydrate, by difference']) {
-        totalCarbohydrate += n['Carbohydrate, by difference'];//Carbohydrate, by differenceがあれば合計する
-      }
-    }
-  }
+//       //()が0,null,undefinedじゃないときに実行
+//       if (n.Energy) totalEnergy += n.Energy;//Energyがあれば合計する
+//       if (n.Protein) totalProtein += n.Protein;//Proteinがあれば合計する
+//       if (n['Total lipid (fat)']) totalFat += n['Total lipid (fat)'];//Total lipid (fat)があれば合計する
+//       if (n['Carbohydrate, by difference']) {
+//         totalCarbohydrate += n['Carbohydrate, by difference'];//Carbohydrate, by differenceがあれば合計する
+//       }
+//     }
+//   }
 
-  // 四捨五入
-  totalEnergy = Math.round(totalEnergy);
-  totalProtein = Math.round(totalProtein);
-  totalFat = Math.round(totalFat);
-  totalCarbohydrate = Math.round(totalCarbohydrate);
+//   // // 四捨五入
+//   // totalEnergy = Math.round(totalEnergy);
+//   // totalProtein = Math.round(totalProtein);
+//   // totalFat = Math.round(totalFat);
+//   // totalCarbohydrate = Math.round(totalCarbohydrate);
 
-  // 表示
-  $('#calorie span').html(totalEnergy);
-  $('#protein span').html(totalProtein);
-  $('#fat span').html(totalFat);
-  $('#carbo span').html(totalCarbohydrate);
-}
+//   // // 表示
+//   // $('#calorie span').html(totalEnergy);
+//   // $('#protein span').html(totalProtein);
+//   // $('#fat span').html(totalFat);
+//   // $('#carbo span').html(totalCarbohydrate);
+// }
 
-//呼び出し
-calculateDailyTotal();
+// //呼び出し
+// calculateDailyTotal();
