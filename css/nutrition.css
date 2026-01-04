@@ -97,8 +97,10 @@ button:hover {
 
 
 .mealItem {
-  padding: 6px;
-  cursor: pointer;
+    display: flex;
+    gap: 7px;
+    padding: 6px;
+    cursor: pointer;
 }
 
 .mealItem.selected {
@@ -167,10 +169,11 @@ button:hover {
     gap: 3%;
 }
 
-#sumMorning,
-#sumLunch,
-#sumDinner,
-#sumOther {
+#sumMorningArea,
+#sumLunchArea,
+#sumDinnerArea,
+#sumOtherArea {
     display: flex;
+    align-items: center;
     gap: 3%;
 }
