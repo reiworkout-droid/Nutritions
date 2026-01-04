@@ -4,6 +4,15 @@ let foods = [];
 // 現在選択中の食べ物ID
 let currentFoodId = null;
 
+//追加ボタンクリックアクション
+$(document).on('click', '.addMeal', function () {          
+  const timing = $(this).data('meal');
+  // const date = $('#date').val();
+
+  location.href = `input.php?timing=${timing}&date=${currentDate}`;
+  console.log('表示中の日付:', currentDate);
+
+});
 
 $('#searchButton').on('click', async function(){
 
@@ -93,13 +102,6 @@ $('#searchButton').on('click', async function(){
         $('#g').html(`<p>分量：<span><input type="number" id="gramInput"></span>g</p>`)
         $('#saveArea').html(`<button id="saveButton">保存</button>`)
 
-        //追加ボタンクリックアクション
-        $('.addMeal').on('click', function() {
-          const timing = $(this).data('meal');
-          const date = $('#date').val();
-
-          location.href = `input.php?timing=${timing}&date=${date}`;
-        });
 
         //検索ボタンを戻す
         $('#searchButton').text('検索');
@@ -596,42 +598,42 @@ if (localStorage.getItem('meal_1')){
 }
 
 
-//削除ボタンクリックアクション
-$('#deleteMorningButton').on('click', function () {
-  if (currentFoodId == null) {
-    alert('削除する食べ物を選択してください');
-    return;
-  }
+// //削除ボタンクリックアクション
+// $('#deleteMorningButton').on('click', function () {
+//   if (currentFoodId == null) {
+//     alert('削除する食べ物を選択してください');
+//     return;
+//   }
 
-  if (!confirm('選択した食べ物を削除しますか？')) {
-    return;
-  }
+//   if (!confirm('選択した食べ物を削除しますか？')) {
+//     return;
+//   }
 
-  let morning;
+//   let morning;
 
-  // localStorage から取得
-  if (localStorage.getItem('meal_1')){
-    morning = JSON.parse(localStorage.getItem('meal_1'));
+//   // localStorage から取得
+//   if (localStorage.getItem('meal_1')){
+//     morning = JSON.parse(localStorage.getItem('meal_1'));
 
-  // IDが一致しないものだけ残す=一致したものだけ取り出す
-  morning = morning.filter(
-    (food) => food.id !== Number(currentFoodId)
-  );
+//   // IDが一致しないものだけ残す=一致したものだけ取り出す
+//   morning = morning.filter(
+//     (food) => food.id !== Number(currentFoodId)
+//   );
 
-  // 保存し直す
-  localStorage.setItem('meal_1', JSON.stringify(morning));
+//   // 保存し直す
+//   localStorage.setItem('meal_1', JSON.stringify(morning));
 
-  // 再描画
-  renderMorning(morning);
+//   // 再描画
+//   renderMorning(morning);
 
-  // 選択解除
-  currentFoodId = null;
-  alert('1件削除しました');
+//   // 選択解除
+//   currentFoodId = null;
+//   alert('1件削除しました');
 
-  //呼び出し
-  calculateDailyTotal();
-}
-});        
+//   //呼び出し
+//   calculateDailyTotal();
+// }
+// });        
 
 
 //昼
@@ -700,42 +702,42 @@ function renderLunch(lunch) {
 
   }
 
-  //削除ボタンクリックアクション
-$('#deleteLunchButton').on('click', function () {
-  if (currentFoodId == null) {
-    alert('削除する食べ物を選択してください');
-    return;
-  }
+//   //削除ボタンクリックアクション
+// $('#deleteLunchButton').on('click', function () {
+//   if (currentFoodId == null) {
+//     alert('削除する食べ物を選択してください');
+//     return;
+//   }
 
-  if (!confirm('選択した食べ物を削除しますか？')) {
-    return;
-  }
+//   if (!confirm('選択した食べ物を削除しますか？')) {
+//     return;
+//   }
 
-  let lunch;
+//   let lunch;
 
-  // localStorage から取得
-  if (localStorage.getItem('meal_2')){
-    lunch = JSON.parse(localStorage.getItem('meal_2'));
+//   // localStorage から取得
+//   if (localStorage.getItem('meal_2')){
+//     lunch = JSON.parse(localStorage.getItem('meal_2'));
 
-  // IDが一致しないものだけ残す
-  lunch = lunch.filter(
-    (food) => food.id !== Number(currentFoodId)
-  );
+//   // IDが一致しないものだけ残す
+//   lunch = lunch.filter(
+//     (food) => food.id !== Number(currentFoodId)
+//   );
 
-  // 保存し直す
-  localStorage.setItem('meal_2', JSON.stringify(lunch));
+//   // 保存し直す
+//   localStorage.setItem('meal_2', JSON.stringify(lunch));
 
-  // 再描画
-  renderLunch(lunch);
+//   // 再描画
+//   renderLunch(lunch);
 
-  // 選択解除
-  currentFoodId = null;
-  alert('1件削除しました');
+//   // 選択解除
+//   currentFoodId = null;
+//   alert('1件削除しました');
 
-  //呼び出し
-  calculateDailyTotal();
-}
-});        
+//   //呼び出し
+//   calculateDailyTotal();
+// }
+// });        
 
 
 
@@ -806,41 +808,41 @@ function renderDinner(dinner) {
   }
 
   //削除ボタンクリックアクション
-$('#deleteDinnerButton').on('click', function () {
-  if (currentFoodId == null) {
-    alert('削除する食べ物を選択してください');
-    return;
-  }
+// $('#deleteDinnerButton').on('click', function () {
+//   if (currentFoodId == null) {
+//     alert('削除する食べ物を選択してください');
+//     return;
+//   }
 
-  if (!confirm('選択した食べ物を削除しますか？')) {
-    return;
-  }
+//   if (!confirm('選択した食べ物を削除しますか？')) {
+//     return;
+//   }
 
-  let dinner;
+//   let dinner;
 
-  // localStorage から取得
-  if (localStorage.getItem('meal_3')){
-    dinner = JSON.parse(localStorage.getItem('meal_3'));
+//   // localStorage から取得
+//   if (localStorage.getItem('meal_3')){
+//     dinner = JSON.parse(localStorage.getItem('meal_3'));
 
-  // IDが一致しないものだけ残す
-  dinner = dinner.filter(
-    (food) => food.id !== Number(currentFoodId)
-  );
+//   // IDが一致しないものだけ残す
+//   dinner = dinner.filter(
+//     (food) => food.id !== Number(currentFoodId)
+//   );
 
-  // 保存し直す
-  localStorage.setItem('meal_3', JSON.stringify(dinner));
+//   // 保存し直す
+//   localStorage.setItem('meal_3', JSON.stringify(dinner));
 
-  // 再描画
-  renderDinner(dinner);
+//   // 再描画
+//   renderDinner(dinner);
 
-  // 選択解除
-  currentFoodId = null;
-  alert('1件削除しました');
+//   // 選択解除
+//   currentFoodId = null;
+//   alert('1件削除しました');
 
-  //呼び出し
-  calculateDailyTotal();
-}
-});        
+//   //呼び出し
+//   calculateDailyTotal();
+// }
+// });        
 
 
 
@@ -912,41 +914,41 @@ function renderOther(other) {
   }
 
     //削除ボタンクリックアクション
-  $('#deleteOtherButton').on('click', function () {
-    if (currentFoodId == null) {
-      alert('削除する食べ物を選択してください');
-      return;
-    }
+  // $('#deleteOtherButton').on('click', function () {
+  //   if (currentFoodId == null) {
+  //     alert('削除する食べ物を選択してください');
+  //     return;
+  //   }
 
-    if (!confirm('選択した食べ物を削除しますか？')) {
-      return;
-    }
+  //   if (!confirm('選択した食べ物を削除しますか？')) {
+  //     return;
+  //   }
 
-    let other;
+//     let other;
 
-    // localStorage から取得
-    if (localStorage.getItem('meal_4')){
-      other = JSON.parse(localStorage.getItem('meal_4'));
+//     // localStorage から取得
+//     if (localStorage.getItem('meal_4')){
+//       other = JSON.parse(localStorage.getItem('meal_4'));
 
-    // IDが一致しないものだけ残す
-    other = other.filter(
-      (food) => food.id !== Number(currentFoodId)
-    );
+//     // IDが一致しないものだけ残す
+//     other = other.filter(
+//       (food) => food.id !== Number(currentFoodId)
+//     );
 
-    // 保存し直す
-    localStorage.setItem('meal_4', JSON.stringify(other));
+//     // 保存し直す
+//     localStorage.setItem('meal_4', JSON.stringify(other));
 
-    // 再描画
-    renderOther(other);
+//     // 再描画
+//     renderOther(other);
 
-    // 選択解除
-    currentFoodId = null;
-    alert('1件削除しました');
+//     // 選択解除
+//     currentFoodId = null;
+//     alert('1件削除しました');
 
-    //呼び出し
-    calculateDailyTotal();
-  }
-});
+//     //呼び出し
+//     calculateDailyTotal();
+//   }
+// });
 
 function calculateDailyTotal() {
   //ローカルストレージのKeyを配列に入れる

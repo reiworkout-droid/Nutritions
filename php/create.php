@@ -2,9 +2,10 @@
 
 // var_dump($_POST);
 // exit;
-
+//選択した日または今日の日付
 $date = $_POST['date'] ?? date('Y-m-d');
 
+//それぞれの値が無ければ以下を出力
 if (
     !isset($_POST['food']) || $_POST['food'] === '' ||
     !isset($_POST['gram']) || $_POST['gram'] === '' ||
@@ -16,6 +17,7 @@ if (
     exit('入力項目が正しくありません');
 }
 
+//値を取ってくる
 $food = $_POST['food'];
 $gram = $_POST['gram'];
 $protein = $_POST['protein'];
@@ -38,7 +40,7 @@ try {
   exit();
 }
 
-// create.php
+//SQLに入力内容を渡す変数を作る
 $sql = 'INSERT INTO My_nutrition (id, food, gram, protein, fat, carb, energy, timing, date, created_at, updated_at) VALUES(NULL, :food, :gram, :protein, :fat, :carb, :energy, :timing, :date, now(), now())';
 $stmt = $pdo->prepare($sql);
 
