@@ -194,11 +194,6 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
         console.log(lunch);
         console.log(dinner);
         console.log(other);
-        //初期表示
-        renderMorning(morning);
-        renderLunch(lunch);
-        renderDinner(dinner);
-        renderOther(other);
 
 
         function renderMorning(morning) {
@@ -244,6 +239,13 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
             $('#sumMorningFat span').html(totalFat);
             $('#sumMorningCarb span').html(totalCarb);
             
+            //合計値を外で使えるように返す
+            return {
+                energy: totalEnergy,
+                protein: totalProtein,
+                fat: totalFat,
+                carb: totalCarb
+            };
         }
 
         //IDを取得
@@ -285,6 +287,7 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
                 currentFoodId = null;
                 alert('1件削除しました');
             });        
+            renderDailyTotal();            
         });
 
 
@@ -330,6 +333,14 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
             $('#sumLunchProtein span').html(totalProtein);
             $('#sumLunchFat span').html(totalFat);
             $('#sumLunchCarb span').html(totalCarb);
+
+            //合計値を外で使えるように返す
+            return {
+                energy: totalEnergy,
+                protein: totalProtein,
+                fat: totalFat,
+                carb: totalCarb
+            };
             
         }
 
@@ -372,6 +383,7 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
                 currentFoodId = null;
                 alert('1件削除しました');
             });        
+            renderDailyTotal();            
         });
 
 
@@ -418,6 +430,13 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
             $('#sumDinnerFat span').html(totalFat);
             $('#sumDinnerCarb span').html(totalCarb);
             
+            //合計値を外で使えるように返す
+            return {
+                energy: totalEnergy,
+                protein: totalProtein,
+                fat: totalFat,
+                carb: totalCarb
+            };
         }
 
         //IDを取得
@@ -458,7 +477,8 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
                 renderDinner(dinner);
                 currentFoodId = null;
                 alert('1件削除しました');
-            });        
+            });  
+            renderDailyTotal();                  
         });
 
 
@@ -505,6 +525,13 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
             $('#sumOtherFat span').html(totalFat);
             $('#sumOtherCarb span').html(totalCarb);
             
+            //合計値を外で使えるように返す
+            return {
+                energy: totalEnergy,
+                protein: totalProtein,
+                fat: totalFat,
+                carb: totalCarb
+            };
         }
 
         //IDを取得
@@ -546,7 +573,164 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
                 currentFoodId = null;
                 alert('1件削除しました');
             });        
+            renderDailyTotal();            
         });
+        $('#searchButton').on('click', async function(){
+
+        //検索中・・・の表示
+        $('#searchButton').text('検索中•••');
+
+        //入力内容の取得
+        const inputText = $('#form').val().trim();
+        if(!inputText) return;
+
+        // 日本語表記用対応表
+        const NUTRIENT_LABELS_JA = {
+            'Energy': 'エネルギー',
+            'Protein': 'P',
+            'Total lipid (fat)': 'F',
+            'Carbohydrate, by difference': 'C'
+        };
+
+        // 三大栄養素＋カロリーのみ入れる箱
+        const TARGET_NUTRIENTS = [
+        'Energy',
+        'Protein',
+        'Total lipid (fat)',
+        'Carbohydrate, by difference'
+        ];
+
+
+        axios.post('/homework/My-Nutrition/php/translate_proxy.php',{
+            q: inputText,
+            target: 'en'
+            })
+            .then(function (translateRes) {
+
+            // ① 翻訳結果
+            const translatedText =
+                translateRes.data.data.translations[0].translatedText;
+
+            console.log('Translated:', translatedText);
+
+            // ② USDA 用 URL（APIキーはPHP側）
+            const searchUrl =
+                `/homework/My-Nutrition/php/usda_proxy.php?q=${encodeURIComponent(translatedText)}`;
+
+            console.log(searchUrl);
+
+            // ③ 次の then に渡す
+            return axios.get(searchUrl);
+            })
+            .then(function (response) {
+
+            // ④ USDA の結果
+                console.log(response.data);
+                const elements = [];
+
+                //計算用の箱
+                const nutrientValues = {};
+
+
+                if (!Array.isArray(response.data.foods)|| response.data.foods.length === 0) {
+                $('#output').html('<p>見つかりませんでした</p>');
+                $('#searchButton').html('検索');
+                return;
+                };
+
+                //最初の１つのみ表示
+                const nutrients = response.data.foods[0].foodNutrients;
+
+                $('#output').html(elements.join(''));//カンマなし
+                $('#g').html(`<p>分量：<span><input type="number" id="gramInput"></span>g</p>`)
+                $('#saveArea').html(`<button id="saveButton">保存</button>`)
+
+                //検索ボタンを戻す
+                $('#searchButton').text('検索');
+
+                $('#saveButton').on('click', function () {
+
+                const gram = Number($('#gramInput').val());
+
+                const per1g = {
+                    energy: (nutrientValues['Energy'] || 0) / 100,
+                    protein: (nutrientValues['Protein'] || 0) / 100,
+                    fat: (nutrientValues['Total lipid (fat)'] || 0) / 100,
+                    carb: (nutrientValues['Carbohydrate, by difference'] || 0) / 100
+                };
+
+                const total = {
+                    energy: per1g.energy * gram,
+                    protein: per1g.protein * gram,
+                    fat: per1g.fat * gram,
+                    carb: per1g.carb * gram
+                };
+                // 保存
+                $('#foodHidden').val(inputText);
+                $('#gram').val(gram);
+                $('#energy').val(Math.round(total.energy * 10) / 10);
+                $('#protein').val(Math.round(total.protein * 10) / 10);
+                $('#fat').val(Math.round(total.fat * 10) / 10);
+                $('#carb').val(Math.round(total.carb * 10) / 10);
+
+                $('#saveForm').submit();
+
+                });
+            })
+
+            .catch(function(error) {//うまくいかんかったら
+            console.log(error);
+            console.log('status:', error.response?.status);
+            console.log('data:', error.response?.data);
+            });
+        });  
+
+    //各合計を呼び出す
+    const morningTotal = renderMorning(morning);
+    const lunchTotal   = renderLunch(lunch);
+    const dinnerTotal  = renderDinner(dinner);
+    const otherTotal   = renderOther(other);
+
+    function renderDailyTotal() {
+        const dailyTotalEnergy =
+            morningTotal.energy +
+            lunchTotal.energy +
+            dinnerTotal.energy +
+            otherTotal.energy;
+
+        const dailyTotalProtein =
+            morningTotal.protein +
+            lunchTotal.protein +
+            dinnerTotal.protein +
+            otherTotal.protein;
+
+        const dailyTotalFat =
+            morningTotal.fat +
+            lunchTotal.fat +
+            dinnerTotal.fat +
+            otherTotal.fat;
+
+        const dailyTotalCarb =
+            morningTotal.carb +
+            lunchTotal.carb +
+            dinnerTotal.carb +
+            otherTotal.carb;
+
+        console.log(dailyTotalEnergy);
+        console.log(dailyTotalProtein);
+        console.log(dailyTotalFat);
+        console.log(dailyTotalCarb);
+
+
+        $('#calorie span').html(dailyTotalEnergy);
+        $('#protein span').html(dailyTotalProtein);
+        $('#fat span').html(dailyTotalFat);
+        $('#carbo span').html(dailyTotalCarb);
+    }
+
+
+    renderDailyTotal();
+
 
     </script>
     <!-- axiosライブラリの読み込み -->
