@@ -62,5 +62,5 @@ try {
   exit();
 }
 
-header('Location: read.php');
+header('Location: index.php');
 exit();

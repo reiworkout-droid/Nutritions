@@ -17,7 +17,7 @@ $date   = $_GET['date']   ?? date('Y-m-d');
     </header>
 
     <div id="goArea">
-        <button onclick="location.href='./read.php'" id="goButton">一覧画面</button>
+        <button onclick="location.href='./index.php'" id="goButton">一覧画面</button>
     </div>
 
 <form id="saveForm" action="create.php" method="POST">
