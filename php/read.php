@@ -89,6 +89,9 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
          <fieldset id="morning">
             <legend id="titleMorning">朝食</legend>
             <div class="addButton">
+                <button class="burn-btn" data-meal="morning">
+                    朝食を消費
+                </button>
                 <button type="button" class="addMeal" data-meal="1">食事追加</button>
                 <button type="button" id="deleteMorningButton" class="deleteButton">1件削除</button>
             </div>
@@ -107,11 +110,18 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
                 <div id="sumMorningFat" class="nutri-item">F: <span></span> g</div>
                 <div id="sumMorningCarb" class="nutri-item">C: <span></span> g</div>
             </div>
+            <div class="burn-result" data-meal="morning" style="display:none;">
+                <ul class="burn-result-list"></ul>
+                <p class="note">※体重70kg基準</p>
+            </div>
         </fieldset>
 
          <fieldset id="lunch">
             <legend id="titleLunch">昼食</legend>
             <div class="addButton">
+                <button class="burn-btn" data-meal="lunch">
+                    昼食を消費
+                </button>
                 <button type="button" class="addMeal" data-meal="2">食事追加</button>
                 <button type="button" id="deleteLunchButton" class="deleteButton">1件削除</button>
             </div>
@@ -129,11 +139,18 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
                 <div id="sumLunchFat" class="nutri-item">F: <span></span> g</div>
                 <div id="sumLunchCarb" class="nutri-item">C: <span></span> g</div>
             </div>
+            <div class="burn-result" data-meal="lunch" style="display:none;">
+                <ul class="burn-result-list"></ul>
+                <p class="note">※体重70kg基準</p>
+            </div>
         </fieldset>
 
          <fieldset id="dinner">
             <legend id="titleDinner">夕食</legend>
             <div class="addButton">
+                <button class="burn-btn" data-meal="dinner">
+                    夕食を消費
+                </button>
                 <button type="button" class="addMeal" data-meal="3">食事追加</button>
                 <button type="button" id="deleteDinnerButton" class="deleteButton">1件削除</button>
             </div>
@@ -151,11 +168,18 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
                 <div id="sumDinnerFat" class="nutri-item">F: <span></span> g</div>
                 <div id="sumDinnerCarb" class="nutri-item">C: <span></span> g</div>
             </div>
+            <div class="burn-result" data-meal="dinner" style="display:none;">
+                <ul class="burn-result-list"></ul>
+                <p class="note">※体重70kg基準</p>
+            </div>
         </fieldset>
 
          <fieldset id="other">
             <legend id="titleOther">間食</legend>
             <div class="addButton">
+                <button class="burn-btn" data-meal="other">
+                間食を消費
+                </button>
                 <button type="button" class="addMeal" data-meal="4">食事追加</button>
                 <button type="button" id="deleteOtherButton" class="deleteButton">1件削除</button>
             </div>
@@ -173,6 +197,10 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
                 <div id="sumOtherFat" class="nutri-item">F: <span></span> g</div>
                 <div id="sumOtherCarb" class="nutri-item">C: <span></span> g</div>
             </div>
+            <div class="burn-result" data-meal="other" style="display:none;">
+                <ul class="burn-result-list"></ul>
+                <p class="note">※体重70kg基準</p>
+            </div>
         </fieldset>
 
         
@@ -181,6 +209,10 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script>
         let currentFoodId = null;
+        let morningTotal = { energy: 0, protein: 0, fat: 0, carb: 0 };
+        let lunchTotal   = { energy: 0, protein: 0, fat: 0, carb: 0 };
+        let dinnerTotal  = { energy: 0, protein: 0, fat: 0, carb: 0 };
+        let otherTotal   = { energy: 0, protein: 0, fat: 0, carb: 0 };
         const currentDate = "<?= $date ?>";
         const morningData = '<?= json_encode($morningData) ?>';
         const lunchData = '<?= json_encode($lunchData) ?>';
@@ -194,6 +226,12 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
         console.log(lunch);
         console.log(dinner);
         console.log(other);
+        //読み込み
+        renderMorning(morning);
+        renderLunch(lunch);
+        renderDinner(dinner);
+        renderOther(other);
+        renderDailyTotal();
 
 
         function renderMorning(morning) {
@@ -239,12 +277,11 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
             $('#sumMorningFat span').html(totalFat);
             $('#sumMorningCarb span').html(totalCarb);
             
-            //合計値を外で使えるように返す
-            return {
-                energy: totalEnergy,
-                protein: totalProtein,
-                fat: totalFat,
-                carb: totalCarb
+            morningTotal = {
+            energy: totalEnergy,
+            protein: totalProtein,
+            fat: totalFat,
+            carb: totalCarb
             };
         }
 
@@ -334,14 +371,12 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
             $('#sumLunchFat span').html(totalFat);
             $('#sumLunchCarb span').html(totalCarb);
 
-            //合計値を外で使えるように返す
-            return {
-                energy: totalEnergy,
-                protein: totalProtein,
-                fat: totalFat,
-                carb: totalCarb
-            };
-            
+            lunchTotal = {
+            energy: totalEnergy,
+            protein: totalProtein,
+            fat: totalFat,
+            carb: totalCarb
+            };            
         }
 
         //IDを取得
@@ -430,12 +465,11 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
             $('#sumDinnerFat span').html(totalFat);
             $('#sumDinnerCarb span').html(totalCarb);
             
-            //合計値を外で使えるように返す
-            return {
-                energy: totalEnergy,
-                protein: totalProtein,
-                fat: totalFat,
-                carb: totalCarb
+            dinnerTotal = {
+            energy: totalEnergy,
+            protein: totalProtein,
+            fat: totalFat,
+            carb: totalCarb
             };
         }
 
@@ -525,12 +559,11 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
             $('#sumOtherFat span').html(totalFat);
             $('#sumOtherCarb span').html(totalCarb);
             
-            //合計値を外で使えるように返す
-            return {
-                energy: totalEnergy,
-                protein: totalProtein,
-                fat: totalFat,
-                carb: totalCarb
+            otherTotal = {
+            energy: totalEnergy,
+            protein: totalProtein,
+            fat: totalFat,
+            carb: totalCarb
             };
         }
 
@@ -575,121 +608,19 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
             });        
             renderDailyTotal();            
         });
-        $('#searchButton').on('click', async function(){
 
-        //検索中・・・の表示
-        $('#searchButton').text('検索中•••');
+        //追加ボタンクリックアクション
+        $(document).on('click', '.addMeal', function () {          
+        const timing = $(this).data('meal');
+        // const date = $('#date').val();
 
-        //入力内容の取得
-        const inputText = $('#form').val().trim();
-        if(!inputText) return;
+        location.href = `input.php?timing=${timing}&date=${currentDate}`;
+        console.log('表示中の日付:', currentDate);
 
-        // 日本語表記用対応表
-        const NUTRIENT_LABELS_JA = {
-            'Energy': 'エネルギー',
-            'Protein': 'P',
-            'Total lipid (fat)': 'F',
-            'Carbohydrate, by difference': 'C'
-        };
-
-        // 三大栄養素＋カロリーのみ入れる箱
-        const TARGET_NUTRIENTS = [
-        'Energy',
-        'Protein',
-        'Total lipid (fat)',
-        'Carbohydrate, by difference'
-        ];
+        });
 
 
-        axios.post('/homework/My-Nutrition/php/translate_proxy.php',{
-            q: inputText,
-            target: 'en'
-            })
-            .then(function (translateRes) {
 
-            // ① 翻訳結果
-            const translatedText =
-                translateRes.data.data.translations[0].translatedText;
-
-            console.log('Translated:', translatedText);
-
-            // ② USDA 用 URL（APIキーはPHP側）
-            const searchUrl =
-                `/homework/My-Nutrition/php/usda_proxy.php?q=${encodeURIComponent(translatedText)}`;
-
-            console.log(searchUrl);
-
-            // ③ 次の then に渡す
-            return axios.get(searchUrl);
-            })
-            .then(function (response) {
-
-            // ④ USDA の結果
-                console.log(response.data);
-                const elements = [];
-
-                //計算用の箱
-                const nutrientValues = {};
-
-
-                if (!Array.isArray(response.data.foods)|| response.data.foods.length === 0) {
-                $('#output').html('<p>見つかりませんでした</p>');
-                $('#searchButton').html('検索');
-                return;
-                };
-
-                //最初の１つのみ表示
-                const nutrients = response.data.foods[0].foodNutrients;
-
-                $('#output').html(elements.join(''));//カンマなし
-                $('#g').html(`<p>分量：<span><input type="number" id="gramInput"></span>g</p>`)
-                $('#saveArea').html(`<button id="saveButton">保存</button>`)
-
-                //検索ボタンを戻す
-                $('#searchButton').text('検索');
-
-                $('#saveButton').on('click', function () {
-
-                const gram = Number($('#gramInput').val());
-
-                const per1g = {
-                    energy: (nutrientValues['Energy'] || 0) / 100,
-                    protein: (nutrientValues['Protein'] || 0) / 100,
-                    fat: (nutrientValues['Total lipid (fat)'] || 0) / 100,
-                    carb: (nutrientValues['Carbohydrate, by difference'] || 0) / 100
-                };
-
-                const total = {
-                    energy: per1g.energy * gram,
-                    protein: per1g.protein * gram,
-                    fat: per1g.fat * gram,
-                    carb: per1g.carb * gram
-                };
-                // 保存
-                $('#foodHidden').val(inputText);
-                $('#gram').val(gram);
-                $('#energy').val(Math.round(total.energy * 10) / 10);
-                $('#protein').val(Math.round(total.protein * 10) / 10);
-                $('#fat').val(Math.round(total.fat * 10) / 10);
-                $('#carb').val(Math.round(total.carb * 10) / 10);
-
-                $('#saveForm').submit();
-
-                });
-            })
-
-            .catch(function(error) {//うまくいかんかったら
-            console.log(error);
-            console.log('status:', error.response?.status);
-            console.log('data:', error.response?.data);
-            });
-        });  
-
-    //各合計を呼び出す
-    const morningTotal = renderMorning(morning);
-    const lunchTotal   = renderLunch(lunch);
-    const dinnerTotal  = renderDinner(dinner);
-    const otherTotal   = renderOther(other);
 
     function renderDailyTotal() {
         const dailyTotalEnergy =
@@ -731,10 +662,69 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
 
     renderDailyTotal();
 
+    </script>
+    
+    <script>
+    console.log('burn js loaded');
+
+    $(document).on('click', '.burn-btn', function () {
+
+        const meal = $(this).data('meal');
+        let calories = 0;
+
+        if (meal === 'morning') calories = morningTotal.energy;
+        if (meal === 'lunch')   calories = lunchTotal.energy;
+        if (meal === 'dinner')  calories = dinnerTotal.energy;
+        if (meal === 'other')   calories = otherTotal.energy;
+
+        if (!calories || calories <= 0) {
+            alert('カロリーが0です');
+            return;
+        }
+
+        // 対応する結果エリアを取得
+        const $resultBox = $(`.burn-result[data-meal="${meal}"]`);
+        const $list = $resultBox.find('.burn-result-list');
+
+        $resultBox.show();
+        $list.html('<li>計算中...</li>');
+
+        $.ajax({
+            url: './caloriesburned_proxy.php',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ calories }),
+            success(res) {
+            renderBurnResult(res.results, $list);
+            },
+            error() {
+            $list.html('<li>計算に失敗しました</li>');
+            }
+        });
+    });   
+
+    function renderBurnResult(results, $list) {
+    let html = '';
+
+    results.forEach(item => {
+        const minutes = Math.round(item.minutes);
+        const h = Math.floor(minutes / 60);
+        const m = minutes % 60;
+
+        html += `
+        <li>
+            <strong>${item.activity}</strong>：
+            ${h > 0 ? h + '時間' : ''}${m}分
+        </li>
+        `;
+    });
+
+    $list.html(html);
+    }
+
 
     </script>
     <!-- axiosライブラリの読み込み -->
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-    <script type="module" src="../nutrition.js"></script>
 </body>
 </html>

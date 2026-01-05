@@ -4,15 +4,15 @@ let foods = [];
 // 現在選択中の食べ物ID
 let currentFoodId = null;
 
-//追加ボタンクリックアクション
-$(document).on('click', '.addMeal', function () {          
-  const timing = $(this).data('meal');
-  // const date = $('#date').val();
+// //追加ボタンクリックアクション
+// $(document).on('click', '.addMeal', function () {          
+//   const timing = $(this).data('meal');
+//   // const date = $('#date').val();
 
-  location.href = `input.php?timing=${timing}&date=${currentDate}`;
-  console.log('表示中の日付:', currentDate);
+//   location.href = `input.php?timing=${timing}&date=${currentDate}`;
+//   console.log('表示中の日付:', currentDate);
 
-});
+// });
 
 $('#searchButton').on('click', async function(){
 
@@ -124,14 +124,14 @@ $('#searchButton').on('click', async function(){
             carb: per1g.carb * gram
           };
 
-          // const saveData = {
-          //   food_name: inputText,
-          //   gram: gram,
-          //   energy: Math.round(total.energy * 10) / 10,
-          //   protein: Math.round(total.protein * 10) / 10,
-          //   fat: Math.round(total.fat * 10) / 10,
-          //   carb: Math.round(total.carb * 10) / 10
-          // };
+          const saveData = {
+            food_name: inputText,
+            gram: gram,
+            energy: Math.round(total.energy * 10) / 10,
+            protein: Math.round(total.protein * 10) / 10,
+            fat: Math.round(total.fat * 10) / 10,
+            carb: Math.round(total.carb * 10) / 10
+          };
 
           // 保存
           $('#foodHidden').val(inputText);
@@ -147,381 +147,381 @@ $('#searchButton').on('click', async function(){
         });
 
 
-          // 朝食に保存
-        $('#morningButton').off('click').on('click', function(){
+//           // 朝食に保存
+//         $('#morningButton').off('click').on('click', function(){
 
-          // すでに保存されている朝食データを取得
-          const savedMorning = localStorage.getItem('meal_1');
+//           // すでに保存されている朝食データを取得
+//           const savedMorning = localStorage.getItem('meal_1');
 
-          // 保存データがあれば配列に戻す、なければ空配列
-          let morning;
+//           // 保存データがあれば配列に戻す、なければ空配列
+//           let morning;
           
-          if(savedMorning) {
-            morning = JSON.parse(savedMorning);
-          } else {
-            morning = [];
-          }
+//           if(savedMorning) {
+//             morning = JSON.parse(savedMorning);
+//           } else {
+//             morning = [];
+//           }
 
-          morning.push({
-            id: Date.now(), //削除用の一意ID 
-            inputText: inputText,//表示用
-            elements: [...elements],
-            nutrients: { ...nutrientValues }//計算用
-          });
-          console.log(morning);
+//           morning.push({
+//             id: Date.now(), //削除用の一意ID 
+//             inputText: inputText,//表示用
+//             elements: [...elements],
+//             nutrients: { ...nutrientValues }//計算用
+//           });
+//           console.log(morning);
 
-          //合計カロリー処理の箱
-          let totalEnergy = 0;
+//           //合計カロリー処理の箱
+//           let totalEnergy = 0;
 
-          for (let i = 0; i < morning.length; i++) {
-            if (morning[i].nutrients?.Energy) {
-              totalEnergy = totalEnergy + morning[i].nutrients.Energy;
-            }
-          }
+//           for (let i = 0; i < morning.length; i++) {
+//             if (morning[i].nutrients?.Energy) {
+//               totalEnergy = totalEnergy + morning[i].nutrients.Energy;
+//             }
+//           }
 
-          totalEnergy = Math.round(totalEnergy);
+//           totalEnergy = Math.round(totalEnergy);
 
-          console.log('合計エネルギー:', totalEnergy);
-          $('#sumMorningEnergy span').html('E:', totalEnergy, 'KCAL'); 
+//           console.log('合計エネルギー:', totalEnergy);
+//           $('#sumMorningEnergy span').html('E:', totalEnergy, 'KCAL'); 
 
-          //合計たんぱく質の箱
-          let totalProtein = 0;
+//           //合計たんぱく質の箱
+//           let totalProtein = 0;
 
-          for (let i = 0; i < morning.length; i++) {
-            if (morning[i].nutrients?.Protein) {
-              totalProtein = totalProtein + morning[i].nutrients.Protein;
-            }
-          }
+//           for (let i = 0; i < morning.length; i++) {
+//             if (morning[i].nutrients?.Protein) {
+//               totalProtein = totalProtein + morning[i].nutrients.Protein;
+//             }
+//           }
 
-          totalProtein = Math.round(totalProtein);
+//           totalProtein = Math.round(totalProtein);
 
-          console.log('合計P:', totalProtein);
-          $('#sumMorningProtein span').html('P:', totalProtein,'G'); 
+//           console.log('合計P:', totalProtein);
+//           $('#sumMorningProtein span').html('P:', totalProtein,'G'); 
 
-          //合計脂質の箱
-          let totalFat = 0;
+//           //合計脂質の箱
+//           let totalFat = 0;
 
-          for (let i = 0; i < morning.length; i++) {
-            if (morning[i].nutrients?.['Total lipid (fat)']) {
-              totalFat = totalFat + morning[i].nutrients['Total lipid (fat)'];
-            }
-          }
+//           for (let i = 0; i < morning.length; i++) {
+//             if (morning[i].nutrients?.['Total lipid (fat)']) {
+//               totalFat = totalFat + morning[i].nutrients['Total lipid (fat)'];
+//             }
+//           }
 
-          totalFat = Math.round(totalFat);
+//           totalFat = Math.round(totalFat);
 
-          console.log('合計F:', totalFat);
-          $('#sumMorningFat span').html('F:', totalFat, 'G'); 
+//           console.log('合計F:', totalFat);
+//           $('#sumMorningFat span').html('F:', totalFat, 'G'); 
 
-          // 合計炭水化物の箱
-          let totalCarbohydrate = 0;
+//           // 合計炭水化物の箱
+//           let totalCarbohydrate = 0;
 
-          for (let i = 0; i < morning.length; i++) {
-            if (morning[i].nutrients?.['Carbohydrate, by difference']) {
-              totalCarbohydrate = totalCarbohydrate + morning[i].nutrients['Carbohydrate, by difference'];
-            }
-          }
+//           for (let i = 0; i < morning.length; i++) {
+//             if (morning[i].nutrients?.['Carbohydrate, by difference']) {
+//               totalCarbohydrate = totalCarbohydrate + morning[i].nutrients['Carbohydrate, by difference'];
+//             }
+//           }
 
-          totalCarbohydrate = Math.round(totalCarbohydrate);
+//           totalCarbohydrate = Math.round(totalCarbohydrate);
 
-          console.log('合計C:', totalCarbohydrate);
-          $('#sumMorningCarb span').html('C:', totalCarbohydrate, 'G'); 
+//           console.log('合計C:', totalCarbohydrate);
+//           $('#sumMorningCarb span').html('C:', totalCarbohydrate, 'G'); 
 
-          const json = JSON.stringify(morning);//JSON形式に変換
-          console.log(json);
+//           const json = JSON.stringify(morning);//JSON形式に変換
+//           console.log(json);
 
-          localStorage.setItem('meal_1', json);//ローカルストレージに保存
+//           localStorage.setItem('meal_1', json);//ローカルストレージに保存
 
-          // 朝食エリアを再描画
-          renderMorning(morning);
+//           // 朝食エリアを再描画
+//           renderMorning(morning);
 
-          //呼び出し
-          calculateDailyTotal();
+//           //呼び出し
+//           calculateDailyTotal();
 
-          alert('朝食を保存しました');
+//           alert('朝食を保存しました');
 
-        });
+//         });
 
-          // 昼食に保存
-        $('#lunchButton').off('click').on('click', function(){
+//           // 昼食に保存
+//         $('#lunchButton').off('click').on('click', function(){
 
-          // すでに保存されている昼食データを取得
-          const savedLunch = localStorage.getItem('meal_2');
+//           // すでに保存されている昼食データを取得
+//           const savedLunch = localStorage.getItem('meal_2');
 
-          // 保存データがあれば配列に戻す、なければ空配列
-          let lunch;
+//           // 保存データがあれば配列に戻す、なければ空配列
+//           let lunch;
           
-          if(savedLunch) {
-            lunch = JSON.parse(savedLunch);
-          } else {
-            lunch = [];
-          }
+//           if(savedLunch) {
+//             lunch = JSON.parse(savedLunch);
+//           } else {
+//             lunch = [];
+//           }
 
-          lunch.push({
-            id: Date.now(), //削除用の一意ID 
-            inputText: inputText,//表示用
-            elements: [...elements],
-            nutrients: { ...nutrientValues }//計算用
-          });
-          console.log(lunch);
+//           lunch.push({
+//             id: Date.now(), //削除用の一意ID 
+//             inputText: inputText,//表示用
+//             elements: [...elements],
+//             nutrients: { ...nutrientValues }//計算用
+//           });
+//           console.log(lunch);
 
-          //合計カロリー処理の箱
-          let totalEnergy = 0;
+//           //合計カロリー処理の箱
+//           let totalEnergy = 0;
 
-          for (let i = 0; i < lunch.length; i++) {
-            if (lunch[i].nutrients?.Energy) {
-              totalEnergy = totalEnergy + lunch[i].nutrients.Energy;
-            }
-          }
+//           for (let i = 0; i < lunch.length; i++) {
+//             if (lunch[i].nutrients?.Energy) {
+//               totalEnergy = totalEnergy + lunch[i].nutrients.Energy;
+//             }
+//           }
 
-          totalEnergy = Math.round(totalEnergy);
+//           totalEnergy = Math.round(totalEnergy);
 
-          console.log('合計エネルギー:', totalEnergy);
-          $('#sumLunchEnergy span').html('E:', totalEnergy, 'KCAL'); 
+//           console.log('合計エネルギー:', totalEnergy);
+//           $('#sumLunchEnergy span').html('E:', totalEnergy, 'KCAL'); 
 
-          //合計たんぱく質の箱
-          let totalProtein = 0;
+//           //合計たんぱく質の箱
+//           let totalProtein = 0;
 
-          for (let i = 0; i < lunch.length; i++) {
-            if (lunch[i].nutrients?.Protein) {
-              totalProtein = totalProtein + lunch[i].nutrients.Protein;
-            }
-          }
+//           for (let i = 0; i < lunch.length; i++) {
+//             if (lunch[i].nutrients?.Protein) {
+//               totalProtein = totalProtein + lunch[i].nutrients.Protein;
+//             }
+//           }
 
-          totalProtein = Math.round(totalProtein);
+//           totalProtein = Math.round(totalProtein);
 
-          console.log('合計P:', totalProtein);
-          $('#sumLunchProtein span').html('P:', totalProtein,'G'); 
+//           console.log('合計P:', totalProtein);
+//           $('#sumLunchProtein span').html('P:', totalProtein,'G'); 
 
-          //合計脂質の箱
-          let totalFat = 0;
+//           //合計脂質の箱
+//           let totalFat = 0;
 
-          for (let i = 0; i < lunch.length; i++) {
-            if (lunch[i].nutrients?.['Total lipid (fat)']) {
-              totalFat = totalFat + lunch[i].nutrients['Total lipid (fat)'];
-            }
-          }
+//           for (let i = 0; i < lunch.length; i++) {
+//             if (lunch[i].nutrients?.['Total lipid (fat)']) {
+//               totalFat = totalFat + lunch[i].nutrients['Total lipid (fat)'];
+//             }
+//           }
 
-          totalFat = Math.round(totalFat);
+//           totalFat = Math.round(totalFat);
 
-          console.log('合計F:', totalFat);
-          $('#sumLunchFat span').html('F:', totalFat, 'G'); 
+//           console.log('合計F:', totalFat);
+//           $('#sumLunchFat span').html('F:', totalFat, 'G'); 
 
-          // 合計炭水化物の箱
-          let totalCarbohydrate = 0;
+//           // 合計炭水化物の箱
+//           let totalCarbohydrate = 0;
 
-          for (let i = 0; i < lunch.length; i++) {
-            if (lunch[i].nutrients?.['Carbohydrate, by difference']) {
-              totalCarbohydrate = totalCarbohydrate + lunch[i].nutrients['Carbohydrate, by difference'];
-            }
-          }
+//           for (let i = 0; i < lunch.length; i++) {
+//             if (lunch[i].nutrients?.['Carbohydrate, by difference']) {
+//               totalCarbohydrate = totalCarbohydrate + lunch[i].nutrients['Carbohydrate, by difference'];
+//             }
+//           }
 
-          totalCarbohydrate = Math.round(totalCarbohydrate);
+//           totalCarbohydrate = Math.round(totalCarbohydrate);
 
-          console.log('合計C:', totalCarbohydrate);
-          $('#sumLunchCarb span').html('C:', totalCarbohydrate, 'G'); 
+//           console.log('合計C:', totalCarbohydrate);
+//           $('#sumLunchCarb span').html('C:', totalCarbohydrate, 'G'); 
 
-          const json = JSON.stringify(lunch);//JSON形式に変換
-          console.log(json);
+//           const json = JSON.stringify(lunch);//JSON形式に変換
+//           console.log(json);
 
-          localStorage.setItem('meal_2', json);//ローカルストレージに保存
+//           localStorage.setItem('meal_2', json);//ローカルストレージに保存
 
-          // 昼食エリアを再描画
-          renderLunch(lunch);
+//           // 昼食エリアを再描画
+//           renderLunch(lunch);
 
-          //呼び出し
-          calculateDailyTotal();
+//           //呼び出し
+//           calculateDailyTotal();
 
-          alert('昼食を保存しました');
+//           alert('昼食を保存しました');
 
-        });
+//         });
 
-          // 夕食に保存
-        $('#dinnerButton').off('click').on('click', function(){
+//           // 夕食に保存
+//         $('#dinnerButton').off('click').on('click', function(){
 
-          // すでに保存されている夕食データを取得
-          const savedDinner = localStorage.getItem('meal_3');
+//           // すでに保存されている夕食データを取得
+//           const savedDinner = localStorage.getItem('meal_3');
 
-          // 保存データがあれば配列に戻す、なければ空配列
-          let dinner;
+//           // 保存データがあれば配列に戻す、なければ空配列
+//           let dinner;
           
-          if(savedDinner) {
-            dinner = JSON.parse(savedDinner);
-          } else {
-            dinner = [];
-          }
+//           if(savedDinner) {
+//             dinner = JSON.parse(savedDinner);
+//           } else {
+//             dinner = [];
+//           }
 
-          dinner.push({
-            id: Date.now(), //削除用の一意ID 
-            inputText: inputText,//表示用
-            elements: [...elements],
-            nutrients: { ...nutrientValues }//計算用
-          });
-          console.log(dinner);
+//           dinner.push({
+//             id: Date.now(), //削除用の一意ID 
+//             inputText: inputText,//表示用
+//             elements: [...elements],
+//             nutrients: { ...nutrientValues }//計算用
+//           });
+//           console.log(dinner);
 
-          //合計カロリー処理の箱
-          let totalEnergy = 0;
+//           //合計カロリー処理の箱
+//           let totalEnergy = 0;
 
-          for (let i = 0; i < dinner.length; i++) {
-            if (dinner[i].nutrients?.Energy) {
-              totalEnergy = totalEnergy + dinner[i].nutrients.Energy;
-            }
-          }
+//           for (let i = 0; i < dinner.length; i++) {
+//             if (dinner[i].nutrients?.Energy) {
+//               totalEnergy = totalEnergy + dinner[i].nutrients.Energy;
+//             }
+//           }
 
-          totalEnergy = Math.round(totalEnergy);
+//           totalEnergy = Math.round(totalEnergy);
 
-          console.log('合計エネルギー:', totalEnergy);
-          $('#sumDinnerEnergy span').html('E:', totalEnergy, 'KCAL'); 
+//           console.log('合計エネルギー:', totalEnergy);
+//           $('#sumDinnerEnergy span').html('E:', totalEnergy, 'KCAL'); 
 
-          //合計たんぱく質の箱
-          let totalProtein = 0;
+//           //合計たんぱく質の箱
+//           let totalProtein = 0;
 
-          for (let i = 0; i < dinner.length; i++) {
-            if (dinner[i].nutrients?.Protein) {
-              totalProtein = totalProtein + dinner[i].nutrients.Protein;
-            }
-          }
+//           for (let i = 0; i < dinner.length; i++) {
+//             if (dinner[i].nutrients?.Protein) {
+//               totalProtein = totalProtein + dinner[i].nutrients.Protein;
+//             }
+//           }
 
-          totalProtein = Math.round(totalProtein);
+//           totalProtein = Math.round(totalProtein);
 
-          console.log('合計P:', totalProtein);
-          $('#sumDinnerProtein span').html('P:', totalProtein,'G'); 
+//           console.log('合計P:', totalProtein);
+//           $('#sumDinnerProtein span').html('P:', totalProtein,'G'); 
 
-          //合計脂質の箱
-          let totalFat = 0;
+//           //合計脂質の箱
+//           let totalFat = 0;
 
-          for (let i = 0; i < dinner.length; i++) {
-            if (dinner[i].nutrients?.['Total lipid (fat)']) {
-              totalFat = totalFat + dinner[i].nutrients['Total lipid (fat)'];
-            }
-          }
+//           for (let i = 0; i < dinner.length; i++) {
+//             if (dinner[i].nutrients?.['Total lipid (fat)']) {
+//               totalFat = totalFat + dinner[i].nutrients['Total lipid (fat)'];
+//             }
+//           }
 
-          totalFat = Math.round(totalFat);
+//           totalFat = Math.round(totalFat);
 
-          console.log('合計F:', totalFat);
-          $('#sumDinnerFat span').html('F:', totalFat, 'G'); 
+//           console.log('合計F:', totalFat);
+//           $('#sumDinnerFat span').html('F:', totalFat, 'G'); 
 
-          // 合計炭水化物の箱
-          let totalCarbohydrate = 0;
+//           // 合計炭水化物の箱
+//           let totalCarbohydrate = 0;
 
-          for (let i = 0; i < dinner.length; i++) {
-            if (dinner[i].nutrients?.['Carbohydrate, by difference']) {
-              totalCarbohydrate = totalCarbohydrate + dinner[i].nutrients['Carbohydrate, by difference'];
-            }
-          }
+//           for (let i = 0; i < dinner.length; i++) {
+//             if (dinner[i].nutrients?.['Carbohydrate, by difference']) {
+//               totalCarbohydrate = totalCarbohydrate + dinner[i].nutrients['Carbohydrate, by difference'];
+//             }
+//           }
 
-          totalCarbohydrate = Math.round(totalCarbohydrate);
+//           totalCarbohydrate = Math.round(totalCarbohydrate);
 
-          console.log('合計C:', totalCarbohydrate);
-          $('#sumDinnerCarb span').html('C:', totalCarbohydrate, 'G'); 
+//           console.log('合計C:', totalCarbohydrate);
+//           $('#sumDinnerCarb span').html('C:', totalCarbohydrate, 'G'); 
 
-          const json = JSON.stringify(dinner);//JSON形式に変換
-          console.log(json);
+//           const json = JSON.stringify(dinner);//JSON形式に変換
+//           console.log(json);
 
-          localStorage.setItem('meal_3', json);//ローカルストレージに保存
+//           localStorage.setItem('meal_3', json);//ローカルストレージに保存
 
-          // 夕食エリアを再描画
-          renderDinner(dinner);
+//           // 夕食エリアを再描画
+//           renderDinner(dinner);
 
-          //呼び出し
-          calculateDailyTotal();
+//           //呼び出し
+//           calculateDailyTotal();
 
-          alert('夕食を保存しました');
+//           alert('夕食を保存しました');
 
-        });
+//         });
 
-          // おやつに保存
-        $('#otherButton').off('click').on('click', function(){
+//           // おやつに保存
+//         $('#otherButton').off('click').on('click', function(){
 
-          // すでに保存されている夕食データを取得
-          const savedOther = localStorage.getItem('meal_4');
+//           // すでに保存されている夕食データを取得
+//           const savedOther = localStorage.getItem('meal_4');
 
-          // 保存データがあれば配列に戻す、なければ空配列
-          let other;
+//           // 保存データがあれば配列に戻す、なければ空配列
+//           let other;
           
-          if(savedOther) {
-            other = JSON.parse(savedOther);
-          } else {
-            other = [];
-          }
+//           if(savedOther) {
+//             other = JSON.parse(savedOther);
+//           } else {
+//             other = [];
+//           }
 
-          other.push({
-            id: Date.now(), //削除用の一意ID 
-            inputText: inputText,//表示用
-            elements: [...elements],
-            nutrients: { ...nutrientValues }//計算用
-          });
-          console.log(other);
+//           other.push({
+//             id: Date.now(), //削除用の一意ID 
+//             inputText: inputText,//表示用
+//             elements: [...elements],
+//             nutrients: { ...nutrientValues }//計算用
+//           });
+//           console.log(other);
 
-          //合計カロリー処理の箱
-          let totalEnergy = 0;
+//           //合計カロリー処理の箱
+//           let totalEnergy = 0;
 
-          for (let i = 0; i < other.length; i++) {
-            if (other[i].nutrients?.Energy) {
-              totalEnergy = totalEnergy + other[i].nutrients.Energy;
-            }
-          }
+//           for (let i = 0; i < other.length; i++) {
+//             if (other[i].nutrients?.Energy) {
+//               totalEnergy = totalEnergy + other[i].nutrients.Energy;
+//             }
+//           }
 
-          totalEnergy = Math.round(totalEnergy);
+//           totalEnergy = Math.round(totalEnergy);
 
-          console.log('合計エネルギー:', totalEnergy);
-          $('#sumOtherEnergy span').html('E:', totalEnergy, 'KCAL'); 
+//           console.log('合計エネルギー:', totalEnergy);
+//           $('#sumOtherEnergy span').html('E:', totalEnergy, 'KCAL'); 
 
-          //合計たんぱく質の箱
-          let totalProtein = 0;
+//           //合計たんぱく質の箱
+//           let totalProtein = 0;
 
-          for (let i = 0; i < other.length; i++) {
-            if (other[i].nutrients?.Protein) {
-              totalProtein = totalProtein + other[i].nutrients.Protein;
-            }
-          }
+//           for (let i = 0; i < other.length; i++) {
+//             if (other[i].nutrients?.Protein) {
+//               totalProtein = totalProtein + other[i].nutrients.Protein;
+//             }
+//           }
 
-          totalProtein = Math.round(totalProtein);
+//           totalProtein = Math.round(totalProtein);
 
-          console.log('合計P:', totalProtein);
-          $('#sumOtherProtein span').html('P:', totalProtein,'G'); 
+//           console.log('合計P:', totalProtein);
+//           $('#sumOtherProtein span').html('P:', totalProtein,'G'); 
 
-          //合計脂質の箱
-          let totalFat = 0;
+//           //合計脂質の箱
+//           let totalFat = 0;
 
-          for (let i = 0; i < other.length; i++) {
-            if (other[i].nutrients?.['Total lipid (fat)']) {
-              totalFat = totalFat + other[i].nutrients['Total lipid (fat)'];
-            }
-          }
+//           for (let i = 0; i < other.length; i++) {
+//             if (other[i].nutrients?.['Total lipid (fat)']) {
+//               totalFat = totalFat + other[i].nutrients['Total lipid (fat)'];
+//             }
+//           }
 
-          totalFat = Math.round(totalFat);
+//           totalFat = Math.round(totalFat);
 
-          console.log('合計F:', totalFat);
-          $('#sumOtherFat span').html('F:', totalFat, 'G'); 
+//           console.log('合計F:', totalFat);
+//           $('#sumOtherFat span').html('F:', totalFat, 'G'); 
 
-          // 合計炭水化物の箱
-          let totalCarbohydrate = 0;
+//           // 合計炭水化物の箱
+//           let totalCarbohydrate = 0;
 
-          for (let i = 0; i < other.length; i++) {
-            if (other[i].nutrients?.['Carbohydrate, by difference']) {
-              totalCarbohydrate = totalCarbohydrate + other[i].nutrients['Carbohydrate, by difference'];
-            }
-          }
+//           for (let i = 0; i < other.length; i++) {
+//             if (other[i].nutrients?.['Carbohydrate, by difference']) {
+//               totalCarbohydrate = totalCarbohydrate + other[i].nutrients['Carbohydrate, by difference'];
+//             }
+//           }
 
-          totalCarbohydrate = Math.round(totalCarbohydrate);
+//           totalCarbohydrate = Math.round(totalCarbohydrate);
 
-          console.log('合計C:', totalCarbohydrate);
-          $('#sumOtherCarb span').html('C:', totalCarbohydrate, 'G'); 
+//           console.log('合計C:', totalCarbohydrate);
+//           $('#sumOtherCarb span').html('C:', totalCarbohydrate, 'G'); 
 
 
-          const json = JSON.stringify(other);//JSON形式に変換
-          console.log(json);
+//           const json = JSON.stringify(other);//JSON形式に変換
+//           console.log(json);
 
-          localStorage.setItem('meal_4', json);//ローカルストレージに保存
+//           localStorage.setItem('meal_4', json);//ローカルストレージに保存
 
-          // おやつエリアを再描画
-          renderOther(other);
+//           // おやつエリアを再描画
+//           renderOther(other);
 
-          //呼び出し
-          calculateDailyTotal();
+//           //呼び出し
+//           calculateDailyTotal();
 
-          alert('おやつを保存しました');
-        });
+//           alert('おやつを保存しました');
+//         });
 
 
     })
@@ -532,70 +532,70 @@ $('#searchButton').on('click', async function(){
     });
   });  
 
-function renderMorning(morning) {
-  let html = ''; // 表示用HTMLを初期化
+// function renderMorning(morning) {
+//   let html = ''; // 表示用HTMLを初期化
 
-  //合計用の箱
-  let totalEnergy = 0;
-  let totalProtein = 0;
-  let totalFat = 0;
-  let totalCarbohydrate = 0;
+//   //合計用の箱
+//   let totalEnergy = 0;
+//   let totalProtein = 0;
+//   let totalFat = 0;
+//   let totalCarbohydrate = 0;
 
-  for (let i = 0; i < morning.length; i++) {
-    html += `
-      <div class="mealItem" data-id="${morning[i].id}">
-        <div class="foodName">${morning[i].inputText}</div>
-        <div class="nutrients">
-          ${morning[i].elements.join('')}
-        </div>
-      </div>
-    `;        
-    // 合計計算 
-    const n = morning[i].nutrients;
+//   for (let i = 0; i < morning.length; i++) {
+//     html += `
+//       <div class="mealItem" data-id="${morning[i].id}">
+//         <div class="foodName">${morning[i].inputText}</div>
+//         <div class="nutrients">
+//           ${morning[i].elements.join('')}
+//         </div>
+//       </div>
+//     `;        
+//     // 合計計算 
+//     const n = morning[i].nutrients;
 
-    if (n?.Energy) totalEnergy += n.Energy;
-    if (n?.Protein) totalProtein += n.Protein;
-    if (n?.['Total lipid (fat)']) totalFat += n['Total lipid (fat)'];
-    if (n?.['Carbohydrate, by difference']) {
-      totalCarbohydrate += n['Carbohydrate, by difference'];
-    }
-  }
+//     if (n?.Energy) totalEnergy += n.Energy;
+//     if (n?.Protein) totalProtein += n.Protein;
+//     if (n?.['Total lipid (fat)']) totalFat += n['Total lipid (fat)'];
+//     if (n?.['Carbohydrate, by difference']) {
+//       totalCarbohydrate += n['Carbohydrate, by difference'];
+//     }
+//   }
 
-  // 小数点以下四捨五入
-  totalEnergy = Math.round(totalEnergy);
-  totalProtein = Math.round(totalProtein);
-  totalFat = Math.round(totalFat);
-  totalCarbohydrate = Math.round(totalCarbohydrate);
+//   // 小数点以下四捨五入
+//   totalEnergy = Math.round(totalEnergy);
+//   totalProtein = Math.round(totalProtein);
+//   totalFat = Math.round(totalFat);
+//   totalCarbohydrate = Math.round(totalCarbohydrate);
 
-  $('#morningArea').html(html);
+//   $('#morningArea').html(html);
 
-  //合計の表示
-  $('#sumMorningEnergy span').html(totalEnergy);
-  $('#sumMorningProtein span').html(totalProtein);
-  $('#sumMorningFat span').html(totalFat);
-  $('#sumMorningCarb span').html(totalCarbohydrate);
+//   //合計の表示
+//   $('#sumMorningEnergy span').html(totalEnergy);
+//   $('#sumMorningProtein span').html(totalProtein);
+//   $('#sumMorningFat span').html(totalFat);
+//   $('#sumMorningCarb span').html(totalCarbohydrate);
   
-  $('#morningArea .mealItem').on('click', function () {
-    currentFoodId = $(this).data('id');
-    console.log('選択中ID:', currentFoodId);
+//   $('#morningArea .mealItem').on('click', function () {
+//     currentFoodId = $(this).data('id');
+//     console.log('選択中ID:', currentFoodId);
 
-    $('#morningArea .mealItem').removeClass('selected');
-    $(this).addClass('selected');
-  });
-}
+//     $('#morningArea .mealItem').removeClass('selected');
+//     $(this).addClass('selected');
+//   });
+// }
 
-//読み込み時にデータの取得
-if (localStorage.getItem('meal_1')){
-  const json = localStorage.getItem('meal_1')
-  console.log(json);
+// //読み込み時にデータの取得
+// if (localStorage.getItem('meal_1')){
+//   const json = localStorage.getItem('meal_1')
+//   console.log(json);
 
-  const morning = JSON.parse(json);//オブジェクトに戻す
-  renderMorning(morning);
+//   const morning = JSON.parse(json);//オブジェクトに戻す
+//   renderMorning(morning);
   
-  //呼び出し
-  calculateDailyTotal();
+//   //呼び出し
+//   calculateDailyTotal();
 
-}
+// }
 
 
 // //削除ボタンクリックアクション
@@ -637,328 +637,328 @@ if (localStorage.getItem('meal_1')){
 
 
 //昼
-function renderLunch(lunch) {
-  let html = ''; // 表示用HTMLを初期化
-
-  //合計用の箱
-  let totalEnergy = 0;
-  let totalProtein = 0;
-  let totalFat = 0;
-  let totalCarbohydrate = 0;
-
-  for (let i = 0; i < lunch.length; i++) {
-    html += `
-      <div class="mealItem" data-id="${lunch[i].id}">
-        <div class="foodName">${lunch[i].inputText}</div>
-        <div class="nutrients">
-          ${lunch[i].elements.join('')}
-        </div>
-      </div>
-    `;        
-    // 合計計算 
-    const n = lunch[i].nutrients;
-
-    if (n?.Energy) totalEnergy += n.Energy;
-    if (n?.Protein) totalProtein += n.Protein;
-    if (n?.['Total lipid (fat)']) totalFat += n['Total lipid (fat)'];
-    if (n?.['Carbohydrate, by difference']) {
-      totalCarbohydrate += n['Carbohydrate, by difference'];
-    }
-  }
-
-  // 小数点以下四捨五入
-  totalEnergy = Math.round(totalEnergy);
-  totalProtein = Math.round(totalProtein);
-  totalFat = Math.round(totalFat);
-  totalCarbohydrate = Math.round(totalCarbohydrate);
-
-  $('#lunchArea').html(html);
-
-  //合計の表示
-  $('#sumLunchEnergy span').html(totalEnergy);
-  $('#sumLunchProtein span').html(totalProtein);
-  $('#sumLunchFat span').html(totalFat);
-  $('#sumLunchCarb span').html(totalCarbohydrate);
-
-  $('#lunchArea .mealItem').on('click', function () {
-    currentFoodId = $(this).data('id');
-    console.log('選択中ID:', currentFoodId);
-
-    $('#lunchArea .mealItem').removeClass('selected');
-    $(this).addClass('selected');
-  });
-}
-
-  //読み込み時にデータの取得
-  if (localStorage.getItem('meal_2')){
-    const json = localStorage.getItem('meal_2')
-    console.log(json);
-
-    const lunch = JSON.parse(json);//オブジェクトに戻す
-    renderLunch(lunch);
-
-    //呼び出し
-    calculateDailyTotal();
-
-  }
-
-//   //削除ボタンクリックアクション
-// $('#deleteLunchButton').on('click', function () {
-//   if (currentFoodId == null) {
-//     alert('削除する食べ物を選択してください');
-//     return;
-//   }
-
-//   if (!confirm('選択した食べ物を削除しますか？')) {
-//     return;
-//   }
-
-//   let lunch;
-
-//   // localStorage から取得
-//   if (localStorage.getItem('meal_2')){
-//     lunch = JSON.parse(localStorage.getItem('meal_2'));
-
-//   // IDが一致しないものだけ残す
-//   lunch = lunch.filter(
-//     (food) => food.id !== Number(currentFoodId)
-//   );
-
-//   // 保存し直す
-//   localStorage.setItem('meal_2', JSON.stringify(lunch));
-
-//   // 再描画
-//   renderLunch(lunch);
-
-//   // 選択解除
-//   currentFoodId = null;
-//   alert('1件削除しました');
-
-//   //呼び出し
-//   calculateDailyTotal();
-// }
-// });        
-
-
-
-function renderDinner(dinner) {
-  let html = ''; // 表示用HTMLを初期化
-
-  //合計用の箱
-  let totalEnergy = 0;
-  let totalProtein = 0;
-  let totalFat = 0;
-  let totalCarbohydrate = 0;
-
-  for (let i = 0; i < dinner.length; i++) {
-    html += `
-      <div class="mealItem" data-id="${dinner[i].id}">
-        <div class="foodName">${dinner[i].inputText}</div>
-        <div class="nutrients">
-          ${dinner[i].elements.join('')}
-        </div>
-      </div>
-    `;        
-    // 合計計算 
-    const n = dinner[i].nutrients;
-
-    if (n?.Energy) totalEnergy += n.Energy;
-    if (n?.Protein) totalProtein += n.Protein;
-    if (n?.['Total lipid (fat)']) totalFat += n['Total lipid (fat)'];
-    if (n?.['Carbohydrate, by difference']) {
-      totalCarbohydrate += n['Carbohydrate, by difference'];
-    }
-  }
-
-  // 小数点以下四捨五入
-  totalEnergy = Math.round(totalEnergy);
-  totalProtein = Math.round(totalProtein);
-  totalFat = Math.round(totalFat);
-  totalCarbohydrate = Math.round(totalCarbohydrate);
-
-  $('#dinnerArea').html(html);
-
-  //合計の表示
-  $('#sumDinnerEnergy span').html(totalEnergy);
-  $('#sumDinnerProtein span').html(totalProtein);
-  $('#sumDinnerFat span').html(totalFat);
-  $('#sumDinnerCarb span').html(totalCarbohydrate);
-
-  $('#dinnerArea .mealItem').on('click', function () {
-    currentFoodId = $(this).data('id');
-    console.log('選択中ID:', currentFoodId);
-
-    $('#dinnerArea .mealItem').removeClass('selected');
-    $(this).addClass('selected');
-  });
-
-}
-
-  //読み込み時にデータの取得
-  if (localStorage.getItem('meal_3')){
-    const json = localStorage.getItem('meal_3')
-    console.log(json);
-
-    const dinner = JSON.parse(json);//オブジェクトに戻す
-    renderDinner(dinner);
-
-    //呼び出し
-    calculateDailyTotal();
- 
-  }
-
-  //削除ボタンクリックアクション
-// $('#deleteDinnerButton').on('click', function () {
-//   if (currentFoodId == null) {
-//     alert('削除する食べ物を選択してください');
-//     return;
-//   }
-
-//   if (!confirm('選択した食べ物を削除しますか？')) {
-//     return;
-//   }
-
-//   let dinner;
-
-//   // localStorage から取得
-//   if (localStorage.getItem('meal_3')){
-//     dinner = JSON.parse(localStorage.getItem('meal_3'));
-
-//   // IDが一致しないものだけ残す
-//   dinner = dinner.filter(
-//     (food) => food.id !== Number(currentFoodId)
-//   );
-
-//   // 保存し直す
-//   localStorage.setItem('meal_3', JSON.stringify(dinner));
-
-//   // 再描画
-//   renderDinner(dinner);
-
-//   // 選択解除
-//   currentFoodId = null;
-//   alert('1件削除しました');
-
-//   //呼び出し
-//   calculateDailyTotal();
-// }
-// });        
-
-
-
-function renderOther(other) {
-  let html = ''; // 表示用HTMLを初期化
-  
-  //合計用の箱
-  let totalEnergy = 0;
-  let totalProtein = 0;
-  let totalFat = 0;
-  let totalCarbohydrate = 0;
-
-
-  for (let i = 0; i < other.length; i++) {
-    html += `
-      <div class="mealItem" data-id="${other[i].id}">
-        <div class="foodName">${other[i].inputText}</div>
-        <div class="nutrients">
-          ${other[i].elements.join('')}
-        </div>
-      </div>
-    `;        
-
-    // 合計計算 
-    const n = other[i].nutrients;
-
-    if (n?.Energy) totalEnergy += n.Energy;
-    if (n?.Protein) totalProtein += n.Protein;
-    if (n?.['Total lipid (fat)']) totalFat += n['Total lipid (fat)'];
-    if (n?.['Carbohydrate, by difference']) {
-      totalCarbohydrate += n['Carbohydrate, by difference'];
-    }
-  }
-
-  // 小数点以下四捨五入
-  totalEnergy = Math.round(totalEnergy);
-  totalProtein = Math.round(totalProtein);
-  totalFat = Math.round(totalFat);
-  totalCarbohydrate = Math.round(totalCarbohydrate);
-
-  $('#otherArea').html(html);
-
-  //合計の表示
-  $('#sumOtherEnergy span').html(totalEnergy);
-  $('#sumOtherProtein span').html(totalProtein);
-  $('#sumOtherFat span').html(totalFat);
-  $('#sumOtherCarb span').html(totalCarbohydrate);
-
-  $('#otherArea .mealItem').on('click', function () {
-    currentFoodId = $(this).data('id');
-    console.log('選択中ID:', currentFoodId);
-
-    $('#otherArea .mealItem').removeClass('selected');
-    $(this).addClass('selected');
-  });
-}
-
-  //読み込み時にデータの取得
-  if (localStorage.getItem('meal_4')){
-    const json = localStorage.getItem('meal_4')
-    console.log(json);
-
-    const other = JSON.parse(json);//オブジェクトに戻す
-    renderOther(other);
-
-    //呼び出し
-    calculateDailyTotal();
-
-  }
-
-    //削除ボタンクリックアクション
-  // $('#deleteOtherButton').on('click', function () {
-  //   if (currentFoodId == null) {
-  //     alert('削除する食べ物を選択してください');
-  //     return;
-  //   }
-
-  //   if (!confirm('選択した食べ物を削除しますか？')) {
-  //     return;
-  //   }
-
-//     let other;
-
-//     // localStorage から取得
-//     if (localStorage.getItem('meal_4')){
-//       other = JSON.parse(localStorage.getItem('meal_4'));
-
-//     // IDが一致しないものだけ残す
-//     other = other.filter(
-//       (food) => food.id !== Number(currentFoodId)
-//     );
-
-//     // 保存し直す
-//     localStorage.setItem('meal_4', JSON.stringify(other));
-
-//     // 再描画
-//     renderOther(other);
-
-//     // 選択解除
-//     currentFoodId = null;
-//     alert('1件削除しました');
-
-//     //呼び出し
-//     calculateDailyTotal();
-//   }
-// });
-
-// function calculateDailyTotal() {
-//   //ローカルストレージのKeyを配列に入れる
-//   const mealKeys = ['meal_1', 'meal_2', 'meal_3', 'meal_4'];
+// function renderLunch(lunch) {
+//   let html = ''; // 表示用HTMLを初期化
 
 //   //合計用の箱
 //   let totalEnergy = 0;
 //   let totalProtein = 0;
 //   let totalFat = 0;
 //   let totalCarbohydrate = 0;
+
+//   for (let i = 0; i < lunch.length; i++) {
+//     html += `
+//       <div class="mealItem" data-id="${lunch[i].id}">
+//         <div class="foodName">${lunch[i].inputText}</div>
+//         <div class="nutrients">
+//           ${lunch[i].elements.join('')}
+//         </div>
+//       </div>
+//     `;        
+//     // 合計計算 
+//     const n = lunch[i].nutrients;
+
+//     if (n?.Energy) totalEnergy += n.Energy;
+//     if (n?.Protein) totalProtein += n.Protein;
+//     if (n?.['Total lipid (fat)']) totalFat += n['Total lipid (fat)'];
+//     if (n?.['Carbohydrate, by difference']) {
+//       totalCarbohydrate += n['Carbohydrate, by difference'];
+//     }
+//   }
+
+//   // 小数点以下四捨五入
+//   totalEnergy = Math.round(totalEnergy);
+//   totalProtein = Math.round(totalProtein);
+//   totalFat = Math.round(totalFat);
+//   totalCarbohydrate = Math.round(totalCarbohydrate);
+
+//   $('#lunchArea').html(html);
+
+//   //合計の表示
+//   $('#sumLunchEnergy span').html(totalEnergy);
+//   $('#sumLunchProtein span').html(totalProtein);
+//   $('#sumLunchFat span').html(totalFat);
+//   $('#sumLunchCarb span').html(totalCarbohydrate);
+
+//   $('#lunchArea .mealItem').on('click', function () {
+//     currentFoodId = $(this).data('id');
+//     console.log('選択中ID:', currentFoodId);
+
+//     $('#lunchArea .mealItem').removeClass('selected');
+//     $(this).addClass('selected');
+//   });
+// }
+
+//   //読み込み時にデータの取得
+//   if (localStorage.getItem('meal_2')){
+//     const json = localStorage.getItem('meal_2')
+//     console.log(json);
+
+//     const lunch = JSON.parse(json);//オブジェクトに戻す
+//     renderLunch(lunch);
+
+//     //呼び出し
+//     calculateDailyTotal();
+
+//   }
+
+// //   //削除ボタンクリックアクション
+// // $('#deleteLunchButton').on('click', function () {
+// //   if (currentFoodId == null) {
+// //     alert('削除する食べ物を選択してください');
+// //     return;
+// //   }
+
+// //   if (!confirm('選択した食べ物を削除しますか？')) {
+// //     return;
+// //   }
+
+// //   let lunch;
+
+// //   // localStorage から取得
+// //   if (localStorage.getItem('meal_2')){
+// //     lunch = JSON.parse(localStorage.getItem('meal_2'));
+
+// //   // IDが一致しないものだけ残す
+// //   lunch = lunch.filter(
+// //     (food) => food.id !== Number(currentFoodId)
+// //   );
+
+// //   // 保存し直す
+// //   localStorage.setItem('meal_2', JSON.stringify(lunch));
+
+// //   // 再描画
+// //   renderLunch(lunch);
+
+// //   // 選択解除
+// //   currentFoodId = null;
+// //   alert('1件削除しました');
+
+// //   //呼び出し
+// //   calculateDailyTotal();
+// // }
+// // });        
+
+
+
+// function renderDinner(dinner) {
+//   let html = ''; // 表示用HTMLを初期化
+
+//   //合計用の箱
+//   let totalEnergy = 0;
+//   let totalProtein = 0;
+//   let totalFat = 0;
+//   let totalCarbohydrate = 0;
+
+//   for (let i = 0; i < dinner.length; i++) {
+//     html += `
+//       <div class="mealItem" data-id="${dinner[i].id}">
+//         <div class="foodName">${dinner[i].inputText}</div>
+//         <div class="nutrients">
+//           ${dinner[i].elements.join('')}
+//         </div>
+//       </div>
+//     `;        
+//     // 合計計算 
+//     const n = dinner[i].nutrients;
+
+//     if (n?.Energy) totalEnergy += n.Energy;
+//     if (n?.Protein) totalProtein += n.Protein;
+//     if (n?.['Total lipid (fat)']) totalFat += n['Total lipid (fat)'];
+//     if (n?.['Carbohydrate, by difference']) {
+//       totalCarbohydrate += n['Carbohydrate, by difference'];
+//     }
+//   }
+
+//   // 小数点以下四捨五入
+//   totalEnergy = Math.round(totalEnergy);
+//   totalProtein = Math.round(totalProtein);
+//   totalFat = Math.round(totalFat);
+//   totalCarbohydrate = Math.round(totalCarbohydrate);
+
+//   $('#dinnerArea').html(html);
+
+//   //合計の表示
+//   $('#sumDinnerEnergy span').html(totalEnergy);
+//   $('#sumDinnerProtein span').html(totalProtein);
+//   $('#sumDinnerFat span').html(totalFat);
+//   $('#sumDinnerCarb span').html(totalCarbohydrate);
+
+//   $('#dinnerArea .mealItem').on('click', function () {
+//     currentFoodId = $(this).data('id');
+//     console.log('選択中ID:', currentFoodId);
+
+//     $('#dinnerArea .mealItem').removeClass('selected');
+//     $(this).addClass('selected');
+//   });
+
+// }
+
+//   //読み込み時にデータの取得
+//   if (localStorage.getItem('meal_3')){
+//     const json = localStorage.getItem('meal_3')
+//     console.log(json);
+
+//     const dinner = JSON.parse(json);//オブジェクトに戻す
+//     renderDinner(dinner);
+
+//     //呼び出し
+//     calculateDailyTotal();
+ 
+//   }
+
+//   //削除ボタンクリックアクション
+// // $('#deleteDinnerButton').on('click', function () {
+// //   if (currentFoodId == null) {
+// //     alert('削除する食べ物を選択してください');
+// //     return;
+// //   }
+
+// //   if (!confirm('選択した食べ物を削除しますか？')) {
+// //     return;
+// //   }
+
+// //   let dinner;
+
+// //   // localStorage から取得
+// //   if (localStorage.getItem('meal_3')){
+// //     dinner = JSON.parse(localStorage.getItem('meal_3'));
+
+// //   // IDが一致しないものだけ残す
+// //   dinner = dinner.filter(
+// //     (food) => food.id !== Number(currentFoodId)
+// //   );
+
+// //   // 保存し直す
+// //   localStorage.setItem('meal_3', JSON.stringify(dinner));
+
+// //   // 再描画
+// //   renderDinner(dinner);
+
+// //   // 選択解除
+// //   currentFoodId = null;
+// //   alert('1件削除しました');
+
+// //   //呼び出し
+// //   calculateDailyTotal();
+// // }
+// // });        
+
+
+
+// function renderOther(other) {
+//   let html = ''; // 表示用HTMLを初期化
+  
+//   //合計用の箱
+//   let totalEnergy = 0;
+//   let totalProtein = 0;
+//   let totalFat = 0;
+//   let totalCarbohydrate = 0;
+
+
+//   for (let i = 0; i < other.length; i++) {
+//     html += `
+//       <div class="mealItem" data-id="${other[i].id}">
+//         <div class="foodName">${other[i].inputText}</div>
+//         <div class="nutrients">
+//           ${other[i].elements.join('')}
+//         </div>
+//       </div>
+//     `;        
+
+//     // 合計計算 
+//     const n = other[i].nutrients;
+
+//     if (n?.Energy) totalEnergy += n.Energy;
+//     if (n?.Protein) totalProtein += n.Protein;
+//     if (n?.['Total lipid (fat)']) totalFat += n['Total lipid (fat)'];
+//     if (n?.['Carbohydrate, by difference']) {
+//       totalCarbohydrate += n['Carbohydrate, by difference'];
+//     }
+//   }
+
+//   // 小数点以下四捨五入
+//   totalEnergy = Math.round(totalEnergy);
+//   totalProtein = Math.round(totalProtein);
+//   totalFat = Math.round(totalFat);
+//   totalCarbohydrate = Math.round(totalCarbohydrate);
+
+//   $('#otherArea').html(html);
+
+//   //合計の表示
+//   $('#sumOtherEnergy span').html(totalEnergy);
+//   $('#sumOtherProtein span').html(totalProtein);
+//   $('#sumOtherFat span').html(totalFat);
+//   $('#sumOtherCarb span').html(totalCarbohydrate);
+
+//   $('#otherArea .mealItem').on('click', function () {
+//     currentFoodId = $(this).data('id');
+//     console.log('選択中ID:', currentFoodId);
+
+//     $('#otherArea .mealItem').removeClass('selected');
+//     $(this).addClass('selected');
+//   });
+// }
+
+//   //読み込み時にデータの取得
+//   if (localStorage.getItem('meal_4')){
+//     const json = localStorage.getItem('meal_4')
+//     console.log(json);
+
+//     const other = JSON.parse(json);//オブジェクトに戻す
+//     renderOther(other);
+
+//     //呼び出し
+//     calculateDailyTotal();
+
+//   }
+
+//     //削除ボタンクリックアクション
+//   // $('#deleteOtherButton').on('click', function () {
+//   //   if (currentFoodId == null) {
+//   //     alert('削除する食べ物を選択してください');
+//   //     return;
+//   //   }
+
+//   //   if (!confirm('選択した食べ物を削除しますか？')) {
+//   //     return;
+//   //   }
+
+// //     let other;
+
+// //     // localStorage から取得
+// //     if (localStorage.getItem('meal_4')){
+// //       other = JSON.parse(localStorage.getItem('meal_4'));
+
+// //     // IDが一致しないものだけ残す
+// //     other = other.filter(
+// //       (food) => food.id !== Number(currentFoodId)
+// //     );
+
+// //     // 保存し直す
+// //     localStorage.setItem('meal_4', JSON.stringify(other));
+
+// //     // 再描画
+// //     renderOther(other);
+
+// //     // 選択解除
+// //     currentFoodId = null;
+// //     alert('1件削除しました');
+
+// //     //呼び出し
+// //     calculateDailyTotal();
+// //   }
+// // });
+
+// // function calculateDailyTotal() {
+// //   //ローカルストレージのKeyを配列に入れる
+// //   const mealKeys = ['meal_1', 'meal_2', 'meal_3', 'meal_4'];
+
+// //   //合計用の箱
+// //   let totalEnergy = 0;
+// //   let totalProtein = 0;
+// //   let totalFat = 0;
+// //   let totalCarbohydrate = 0;
 
 //   //mealKeysの中身（meal_1~4）を順番に取ってローカルストレージの中身（文字列）を取得
 //   for (const key of mealKeys) {
