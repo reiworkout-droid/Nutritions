@@ -1,57 +1,199 @@
-header {
-    display: flex;
-    justify-content: center;
-    font-size: 10px;
-    text-decoration: underline;
-    text-decoration-color: oklch(0.9 0.15 500);
-    text-decoration-thickness: 0.5em;
-    text-underline-offset: -0.1em; /* 線の位置。テキストに重なるようにやや上部にする */
+/* =========================
+   Design Tokens（indexと統一）
+========================= */
+:root {
+  --bg-main: #f4f6f8;
+  --bg-card: #ffffff;
+  --text-main: #2e2e2e;
+  --text-sub: #6b7280;
+
+  --accent: #3bb273;
+  --accent-soft: #e6f5ee;
 }
 
-.form {
-    border: 2px solid;
-    border-radius: 20px;
-    background-color: oklch(1 0.4 100);
-    padding: 5px;
+/* =========================
+   Base
+========================= */
+* {
+  box-sizing: border-box;
 }
 
-#search {
-    background-color: oklch(1 0.3 300);
-    height: 450px;
+body {
+  margin: 0;
+  padding: 12px;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
 }
 
+/* =========================
+   Header
+========================= */
+header h1 {
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+header h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--accent);
+  margin: 6px auto 0;
+  border-radius: 2px;
+}
+
+/* =========================
+   Navigation
+========================= */
 #goArea {
-    display: flex;
-    justify-content: end;
-    margin-top: 10px;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
 }
 
+#goButton {
+  background: var(--bg-card);
+}
+
+/* =========================
+   Fieldset / Card
+========================= */
+fieldset {
+  border: none;
+  border-radius: 16px;
+  padding: 16px;
+  background: var(--bg-card);
+}
+
+legend.form {
+  padding: 4px 12px;
+  font-weight: 600;
+  color: var(--text-sub);
+}
+
+/* =========================
+   Search Area
+========================= */
 #searchArea {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 24px;
 }
 
 #form {
-    width: 50%;
+  width: 60%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
 }
 
+#form:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* 検索ボタン */
+#searchButton {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: none;
+  background: var(--accent);
+  color: #fff;
+  font-size: 13px;
+}
+
+#searchButton:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+/* =========================
+   Output Area
+========================= */
 #outputArea {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 20px;
-    gap: 5px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 24px;
+  gap: 8px;
+}
+
+/* 検索結果カード想定 */
+#output {
+  width: 100%;
+  background: var(--bg-main);
+  border-radius: 12px;
+  padding: 10px;
+  font-size: 14px;
 }
 
 #g {
-    width: 30%;
+  width: 40%;
+  text-align: center;
+  font-size: 13px;
+  color: var(--text-sub);
 }
 
+/* =========================
+   Save Area
+========================= */
 #saveArea {
-    display: flex;
-    justify-content: end;
-    margin-top: 30px;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+}
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 16px;
+  }
+
+  #form {
+    width: 100%;
+  }
+
+  #searchArea {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+/* =========================
+   Save Button – Circular
+========================= */
+#saveArea button {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  padding: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background: var(--accent);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+
+  box-shadow: 0 6px 14px rgba(59, 178, 115, 0.35);
+}
+
+/* hover / active */
+#saveArea button:hover {
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+#saveArea button:active {
+  transform: scale(0.95);
 }

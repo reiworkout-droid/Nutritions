@@ -98,6 +98,7 @@ $('#searchButton').on('click', async function(){
           }
         console.log(elements);
 
+        $('#per').html('<100gあたり>')
         $('#output').html(elements.join(''));//カンマなし
         $('#g').html(`<p>分量：<span><input type="number" id="gramInput"></span>g</p>`)
         $('#saveArea').html(`<button id="saveButton">保存</button>`)

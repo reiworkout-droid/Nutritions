@@ -63,17 +63,30 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/nutrition.css">
+    <link rel="stylesheet" href="./css/nutrition.css">
     <title>MyNutrition</title>
 </head>
 <body>
+    <!-- Splash Screen -->
+    <div id="splash">
+        <h2 class="splash-title">今日何食うたと？</h2>
+
+        <div class="muscle-foods">
+            <span>🍗</span>
+            <span>🥚</span>
+            <span>🥦</span>
+            <span>🍚</span>
+        </div>
+    </div>
+
+    <!-- 本編 -->
     <header>
         <h1><?php echo $displayDate; ?>何食うたと？</h1>
     </header>
 
     <main>
         <div id="goList">
-            <button onclick="location.href='./calender.php'" id="dateButton">日付選択</button>
+            <button onclick="location.href='./php/calender.php'" id="dateButton">日付選択</button>
         </div>
         <fieldset id="total">
             <legend id="resultArea">1日合計</legend>
@@ -104,7 +117,7 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
                 </div>
             </div>
             <div id="sumMorningArea" class="nutrition-summary">
-                <p class="sum">合計：</p> 
+                <div class="sum">合計：</div> 
                 <div id="sumMorningEnergy" class="nutri-item">E: <span></span> kcal</div>
                 <div id="sumMorningProtein" class="nutri-item">P: <span></span> g</div>
                 <div id="sumMorningFat" class="nutri-item">F: <span></span> g</div>
@@ -133,7 +146,7 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
                 </div>
             </div>
             <div id="sumLunchArea" class="nutrition-summary">
-                <p class="sum">合計：</p> 
+                <div class="sum">合計：</div> 
                 <div id="sumLunchEnergy" class="nutri-item">E: <span></span> kcal</div>
                 <div id="sumLunchProtein" class="nutri-item">P: <span></span> g</div>
                 <div id="sumLunchFat" class="nutri-item">F: <span></span> g</div>
@@ -162,7 +175,7 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
                 </div>
             </div>
             <div id="sumDinnerArea" class="nutrition-summary">
-                <p class="sum">合計：</p> 
+                <div class="sum">合計：</div> 
                 <div id="sumDinnerEnergy" class="nutri-item">E: <span></span> kcal</div>
                 <div id="sumDinnerProtein" class="nutri-item">P: <span></span> g</div>
                 <div id="sumDinnerFat" class="nutri-item">F: <span></span> g</div>
@@ -191,7 +204,7 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
                 </div>
             </div>
             <div id="sumOtherArea" class="nutrition-summary">
-                <p class="sum">合計：</p> 
+                <div class="sum">合計：</div> 
                 <div id="sumOtherEnergy" class="nutri-item">E: <span></span> kcal</div>
                 <div id="sumOtherProtein" class="nutri-item">P: <span></span> g</div>
                 <div id="sumOtherFat" class="nutri-item">F: <span></span> g</div>
@@ -207,6 +220,16 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
         
     </main>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+    //アニメーション終了
+    window.addEventListener('load', () => {
+        const splash = document.getElementById('splash');
+        setTimeout(() => {
+        splash.remove();
+        }, 3500);
+    });
+    </script>
+
     <script>
         let currentFoodId = null;
         let morningTotal = { energy: 0, protein: 0, fat: 0, carb: 0 };
@@ -309,7 +332,7 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
             const deleteId = currentFoodId; 
 
             // AjaxでPHPに送る
-            $.post('delete.php', { id: deleteId }, function (res) {
+            $.post('./php/delete.php', { id: deleteId }, function (res) {
                 const result = JSON.parse(res);
 
                 if (!result.success) {
@@ -403,7 +426,7 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
             const deleteId = currentFoodId; 
 
             // AjaxでPHPに送る
-            $.post('delete.php', { id: deleteId }, function (res) {
+            $.post('./php/delete.php', { id: deleteId }, function (res) {
                 const result = JSON.parse(res);
 
                 if (!result.success) {
@@ -497,7 +520,7 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
             const deleteId = currentFoodId; 
 
             // AjaxでPHPに送る
-            $.post('delete.php', { id: deleteId }, function (res) {
+            $.post('./php/delete.php', { id: deleteId }, function (res) {
                 const result = JSON.parse(res);
 
                 if (!result.success) {
@@ -591,7 +614,7 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
             const deleteId = currentFoodId; 
 
             // AjaxでPHPに送る
-            $.post('delete.php', { id: deleteId }, function (res) {
+            $.post('./php/delete.php', { id: deleteId }, function (res) {
                 const result = JSON.parse(res);
 
                 if (!result.success) {
@@ -612,9 +635,8 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
         //追加ボタンクリックアクション
         $(document).on('click', '.addMeal', function () {          
         const timing = $(this).data('meal');
-        // const date = $('#date').val();
 
-        location.href = `input.php?timing=${timing}&date=${currentDate}`;
+        location.href = `./php/input.php?timing=${timing}&date=${currentDate}`;
         console.log('表示中の日付:', currentDate);
 
         });
@@ -690,7 +712,7 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
         $list.html('<li>計算中...</li>');
 
         $.ajax({
-            url: './caloriesburned_proxy.php',
+            url: './php/caloriesburned_proxy.php',
             method: 'POST',
             contentType: 'application/json',
             data: JSON.stringify({ calories }),

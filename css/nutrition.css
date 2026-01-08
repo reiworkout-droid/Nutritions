@@ -1,179 +1,376 @@
-h1 {
-    text-align: center;
-    text-decoration: underline;
-    text-decoration-color: oklch(0.9 0.15 500);
-    text-decoration-thickness: 0.5em;
-    text-underline-offset: -0.1em; /* 線の位置。テキストに重なるようにやや上部にする */
-    font-size: 10px;
+/* =========================
+   Splash Screen
+========================= */
+#splash {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    #e6f5ee,
+    #f4f6f8
+  );
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: splashFadeOut 1s ease forwards;
+  animation-delay: 2.5s;
 }
 
-@media(max-width:600px){
-    h1 {
-        font-size: 18px;
-    }
+.splash-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  animation: titleZoom 1.2s ease;
 }
 
-#goList {
-    display: flex;
-    justify-content: end;
+/* 筋肉飯アイコン */
+.muscle-foods {
+  display: flex;
+  gap: 20px;
+  font-size: 36px;
 }
 
-#total {
-    border-radius: 20px;
-    background-color: oklch(0.9 0.14 40);
+.muscle-foods span {
+  animation: float 2s ease-in-out infinite;
 }
 
-#resultArea {
-    border: 2px solid;
-    border-radius: 20px;
-    background-color: oklch(1 0.4 100);
-    padding: 5px;
+/* 少しずつズラす */
+.muscle-foods span:nth-child(1) { animation-delay: 0s; }
+.muscle-foods span:nth-child(2) { animation-delay: 0.3s; }
+.muscle-foods span:nth-child(3) { animation-delay: 0.6s; }
+.muscle-foods span:nth-child(4) { animation-delay: 0.9s; }
+
+/* =========================
+   Animations
+========================= */
+@keyframes titleZoom {
+  0% {
+    transform: scale(0.6);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
-#search {
-    border: 1.5px solid;
-    border-radius: 20px;
-    background-color: #EEEEEE;
-    margin-top: 30px;
-    padding: 10px;
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
-.form {
-    border: 2px solid;
-    border-radius: 20px;
-    background-color: oklch(1 0.4 100);
-    padding: 5px;
+@keyframes splashFadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
-#form {
-    margin-left: 5%;
-    width: 40%;
+/* =========================
+   Design Tokens（ここだけ触れば雰囲気変わる）
+========================= */
+:root {
+  --bg-main: #f4f6f8;
+  --bg-card: #ffffff;
+  --text-main: #2e2e2e;
+  --text-sub: #6b7280;
+
+  --accent: #3bb273;
+  --accent-soft: #e6f5ee;
+
+  --morning: #fff7e6;
+  --lunch: #eef3ff;
+  --dinner: #eefaf4;
+  --other: #f5f5f5;
 }
 
-#searchButton {
-    background-color: oklch(1 0.3 300);
-    margin: 2% 0%;
+/* =========================
+   Base
+========================= */
+* {
+  box-sizing: border-box;
 }
 
-
-#goButton {
-    display: flex;
-    gap: 5%;
-    margin: 2% 0%;
-    margin-left: 5%;
+body {
+  margin: 0;
+  padding: 12px;
+  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-main);
 }
 
-#morningButton {
-    background-color: oklch(0.9 0.16 100);
+/* =========================
+   Header
+========================= */
+header h1 {
+  text-align: center;
+  font-size: 18px;
+  margin-bottom: 16px;
+  font-weight: 600;
 }
 
-#lunchButton {
-    background-color: oklch(1 0.3 300);
+header h1::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--accent);
+  margin: 6px auto 0;
+  border-radius: 2px;
 }
 
-#dinnerButton {
-    background-color: oklch(0.9 0.15 120);
-}
-
-#otherButton {
-    background-color: oklch(0.9 0.05 250);
-}
-
-
-#output {
-    display: flex;
-    gap: 8%;
+/* =========================
+   Buttons
+========================= */
+button {
+  border: none;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 13px;
+  background: var(--bg-card);
+  color: var(--text-main);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.08);
 }
 
 button:hover {
-    cursor: pointer;
+  cursor: pointer;
+  background: var(--accent-soft);
 }
 
+/* =========================
+   Top control
+========================= */
+#goList {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 12px;
+}
+
+/* =========================
+   Fieldset common
+========================= */
+fieldset {
+  border: none;
+  border-radius: 16px;
+  padding: 12px;
+  margin-bottom: 16px;
+}
+
+legend {
+  padding: 4px 10px;
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-sub);
+}
+
+/* =========================
+   Daily total
+========================= */
+#total {
+  background: var(--bg-card);
+}
+
+#total p {
+  margin: 4px 0;
+  font-size: 14px;
+}
+
+/* =========================
+   Meal blocks
+========================= */
 .addButton {
-    display: flex;
-    justify-content: end;
-    gap: 5px;
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 8px;
 }
-
 
 .mealItem {
-    display: flex;
-    gap: 7px;
-    padding: 6px;
-    cursor: pointer;
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 8px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  cursor: pointer;
 }
 
 .mealItem.selected {
-  outline: 2px solid #ff9800;
-  background-color: #fff3e0;
+  outline: 2px solid var(--accent);
 }
 
-.nutrients {
-    display: flex;
-    gap: 5%;
+/* 食品名 */
+.foodName {
+  font-weight: 600;
+  margin-bottom: 4px;
 }
 
+/* =========================
+   栄養素 横一列
+========================= */
+.mealItem > div:not(.foodName) {
+  display: inline-block;
+  margin-right: 10px;
+  color: var(--text-sub);
+  font-size: 12px;
+}
+
+/* =========================
+   合計表示
+========================= */
+.nutrition-summary {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-sub);
+}
+
+.nutri-item span {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* =========================
+   Burn result
+========================= */
+.burn-result {
+  background: var(--bg-card);
+  border-radius: 10px;
+  padding: 8px;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.note {
+  font-size: 11px;
+  color: var(--text-sub);
+}
+
+/* =========================
+   Meal colors（薄く）
+========================= */
+#morning { background: var(--morning); }
+#lunch   { background: var(--lunch); }
+#dinner  { background: var(--dinner); }
+#other   { background: var(--other); }
+
+/* =========================
+   Responsive
+========================= */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 16px;
+  }
+
+  .nutrition-summary {
+    flex-wrap: wrap;
+  }
+}
+
+/* =========================
+   Meal emphasis（ここ追加）
+========================= */
+#morning,
+#lunch,
+#dinner,
+#other {
+  position: relative;
+  padding-left: 16px;
+}
+
+/* 左アクセントライン */
+#morning::before,
+#lunch::before,
+#dinner::before,
+#other::before {
+  content: "";
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 6px;
+  width: 4px;
+  border-radius: 2px;
+}
+
+/* 色指定 */
+#morning::before { background: #f4b400; }
+#lunch::before   { background: #5c7cfa; }
+#dinner::before  { background: #3bb273; }
+#other::before   { background: #9ca3af; }
+
+/* legendを少し強調 */
+#morning legend,
+#lunch legend,
+#dinner legend,
+#other legend {
+  font-weight: 700;
+  color: var(--text-main);
+}
+
+/* =========================
+   Burn result upgrade
+========================= */
+.burn-result-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.burn-result-list li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-main);
+  border-radius: 10px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+}
+
+/* アイコン風 */
+.burn-result-list li::before {
+  font-size: 20px;
+}
+
+/* =========================
+   Meal background enhancement
+========================= */
 #morning {
-    border-radius: 20px;
-    background-color: oklch(0.9 0.16 100);
-    margin-top: 20px;
+  background: linear-gradient(
+    90deg,
+    rgba(244, 180, 0, 0.12),
+    rgba(255, 255, 255, 0.9)
+  );
 }
 
-#titleMorning {
-    border: 2px solid;
-    border-radius: 20px;
-    background-color: oklch(1 0.4 100);
-    padding: 5px;
-}
-
-#lunch {    
-    border-radius: 20px;
-    background-color: oklch(1 0.3 300);
-    margin-top: 20px;
-}
-
-#titleLunch {
-    border: 2px solid;
-    border-radius: 20px;
-    background-color: oklch(1 0.4 100);
-    padding: 5px;
+#lunch {
+  background: linear-gradient(
+    90deg,
+    rgba(92, 124, 250, 0.12),
+    rgba(255, 255, 255, 0.9)
+  );
 }
 
 #dinner {
-    border-radius: 20px;
-    background-color: oklch(0.9 0.15 120);
-    margin-top: 20px;
-}
-
-#titleDinner {
-    border: 2px solid;
-    border-radius: 20px;
-    background-color: oklch(1 0.4 100);
-    padding: 5px;
+  background: linear-gradient(
+    90deg,
+    rgba(59, 178, 115, 0.12),
+    rgba(255, 255, 255, 0.9)
+  );
 }
 
 #other {
-    border-radius: 20px;
-    background-color: oklch(0.9 0.05 250);
-    margin-top: 20px;
-}
-
-#titleOther {
-    border: 2px solid;
-    border-radius: 20px;
-    background-color: oklch(1 0.4 100);
-    padding: 5px;
-}
-
-#sumOther {
-    gap: 3%;
-}
-
-#sumMorningArea,
-#sumLunchArea,
-#sumDinnerArea,
-#sumOtherArea {
-    display: flex;
-    align-items: center;
-    gap: 3%;
+  background: linear-gradient(
+    90deg,
+    rgba(156, 163, 175, 0.12),
+    rgba(255, 255, 255, 0.9)
+  );
 }

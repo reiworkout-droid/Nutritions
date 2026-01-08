@@ -71,7 +71,7 @@ function changeMonth(diff) {
 }
 
 function selectDate(year, month, day) {
-    window.location.href = `index.php?date=${year}-${month+1}-${day}`;
+    window.location.href = `../index.php?date=${year}-${month+1}-${day}`;
 }
 
 // 初期描画

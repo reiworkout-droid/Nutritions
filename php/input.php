@@ -12,12 +12,13 @@ $date   = $_GET['date']   ?? date('Y-m-d');
     <title>何をどんだけ食うたと？</title>
 </head>
 <body>
+    <!-- 本編 -->
     <header>
         <h1>今日何食うたと？</h1>
     </header>
 
     <div id="goArea">
-        <button onclick="location.href='./index.php'" id="goButton">一覧画面</button>
+        <button onclick="location.href='../index.php'" id="goButton">一覧画面</button>
     </div>
 
 <form id="saveForm" action="create.php" method="POST">
@@ -40,6 +41,7 @@ $date   = $_GET['date']   ?? date('Y-m-d');
 
         <!-- 出力場所 -->
          <div id="outputArea">
+            <div id="per"></div>
             <div id="output"></div>
             <div id="g"></div>
          </div>
