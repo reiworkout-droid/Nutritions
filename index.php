@@ -1,23 +1,16 @@
 <?php
+include('./php/functions.php');
 $date = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
 //タイムスタンプ形式
 $timestamp = strtotime($date);
 //表示用に変更
 $displayDate = date('Y年n月j日', $timestamp);
 
-// DB接続　毎回決まった構文（dbnameのみ変更）
-// 各種項目設定
-$dbn ='mysql:dbname=My_nutrition;charset=utf8mb4;port=3306;host=localhost';
-$user = 'root';
-$pwd = '';
-
-// DB接続 決まった構文
-try {
-  $pdo = new PDO($dbn, $user, $pwd);
-} catch (PDOException $e) {
-  echo json_encode(["db error" => "{$e->getMessage()}"]);
-  exit();
-}
+// DB接続
+//サクラ
+$pdo = connect_to_db();
+//ローカルホスト
+// $pdo = connect_to_db_pre();
 
 function getMeal($pdo, $date, $timing) {
     // SQL作成&実行
@@ -69,7 +62,6 @@ $dailyTotal = calcTotal(array_merge($morningData,$lunchData,$dinnerData,$otherDa
 <body>
     <!-- Splash Screen -->
     <div id="splash">
-        <h2 class="splash-title">今日何食うたと？</h2>
 
         <div class="muscle-foods">
             <span>🍗</span>
